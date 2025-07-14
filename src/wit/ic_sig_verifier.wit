@@ -1,0 +1,5 @@
+package rust:ic-sig-verifier-component;
+
+world ic-sig-verifier {
+  export verify-canister-sig: func(sig-and-pk-der: list<u8>) -> list<u8>;
+}

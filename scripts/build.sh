@@ -1,21 +1,31 @@
 #!/bin/bash
 export TARGET=wasm32-unknown-unknown
+export BUILD_MODE=release
+export MOPS_DIR=mops
 (
     cd "$(dirname "$0")/.." &&
 
-    # Build Rust component
-    cargo build --target $TARGET &&
-    wasm-tools component new target/$TARGET/debug/component.wasm -o target/rust-component.wasm &&
+    # echo --- Build Rust component
+    # cargo build --$BUILD_MODE --target $TARGET &&
+    # wasm-tools component new target/$TARGET/$BUILD_MODE/ic_sig_verifier.wasm -o target/ic_sig_verifier-component.wasm &&
+    # echo --- Copy Rust component
+    # cp target/ic_sig_verifier-component.wasm $MOPS_DIR/ic_sig_verifier/ic_sig_verifier.wasm &&
+    # cp src/wit/ic_sig_verifier.mo $MOPS_DIR/ic_sig_verifier/ &&
+
 
     # Download `wasi_snapshot_preview1` adapter (used for building the Motoko component)
-    ( wget -c -q https://github.com/bytecodealliance/wasmtime/releases/download/v22.0.0/wasi_snapshot_preview1.command.wasm -O target/wasi-adapter.wasm ) &&
+    # ( curl -L https://github.com/bytecodealliance/wasmtime/releases/download/v22.0.1/wasi_snapshot_preview1.command.wasm -o target/wasi-adapter.wasm ) &&
 
-    # Build Motoko component
+    echo --- Build Motoko component
     # TODO: replace with `$(dfx cache show)/moc`
-    nix-shell ../motoko/shell.nix --run "../motoko/bin/moc -wasi-system-api -import-component src/motoko/Main.mo -o target/motoko.wasm" &&
+    echo ... running moc...
+    # nix-shell ../motoko/nix/shell.nix --run "../motoko/bin/moc -wasi-system-api -wasm-components src/motoko/Main.mo -o target/motoko.wasm" &&
+    ../motoko/bin/moc -wasi-system-api -wasm-components src/motoko/Main.mo -o target/motoko.wasm &&
+    echo ... running embed...
     wasm-tools component embed src/wit/motoko.wit target/motoko.wasm -o target/motoko-embed.wasm &&
+    echo ... creating component...
     wasm-tools component new target/motoko-embed.wasm -o target/motoko-component.wasm --adapt wasi_snapshot_preview1=target/wasi-adapter.wasm &&
     
-    # Compose components
-    wac encode src/wac/composition.wac -d motoko:component=target/motoko-component.wasm -d rust:component=target/rust-component.wasm -o target/motoko-composed.wasm
+    echo --- Compose components
+    wac compose src/wac/composition.wac -d motoko:component=target/motoko-component.wasm -d rust:ic_sig_verifier=$MOPS_DIR/ic_sig_verifier/ic_sig_verifier.wasm -o target/motoko-composed.wasm
 )

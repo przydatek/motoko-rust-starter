@@ -1,6 +1,6 @@
 package motoko:composition;
 
-let rust = new rust:component {};
+let rust = new rust:ic-sig-verifier {};
 
 let motoko = new motoko:component {
     component: rust,
