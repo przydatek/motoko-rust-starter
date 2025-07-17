@@ -8,9 +8,6 @@ export MOPS_DIR=mops
     # echo --- Build Rust component
     # cargo build --$BUILD_MODE --target $TARGET &&
     # wasm-tools component new target/$TARGET/$BUILD_MODE/ic_sig_verifier.wasm -o target/ic_sig_verifier-component.wasm &&
-    # echo --- Copy Rust component
-    # cp target/ic_sig_verifier-component.wasm $MOPS_DIR/ic_sig_verifier/ic_sig_verifier.wasm &&
-    # cp src/wit/ic_sig_verifier.mo $MOPS_DIR/ic_sig_verifier/ &&
 
 
     # Download `wasi_snapshot_preview1` adapter (used for building the Motoko component)
@@ -24,8 +21,8 @@ export MOPS_DIR=mops
     echo ... running embed...
     wasm-tools component embed src/wit/motoko.wit target/motoko.wasm -o target/motoko-embed.wasm &&
     echo ... creating component...
-    wasm-tools component new target/motoko-embed.wasm -o target/motoko-component.wasm --adapt wasi_snapshot_preview1=target/wasi-adapter.wasm &&
-    
+    wasm-tools component new target/motoko-embed.wasm -v -o target/motoko-component.wasm --adapt wasi_snapshot_preview1=target/wasi-adapter.wasm &&
     echo --- Compose components
-    wac compose src/wac/composition.wac -d motoko:component=target/motoko-component.wasm -d rust:ic_sig_verifier=$MOPS_DIR/ic_sig_verifier/ic_sig_verifier.wasm -o target/motoko-composed.wasm
+    wac compose src/wac/composition.wac -d motoko:component=target/motoko-component.wasm -d rust:component=$MOPS_DIR/ic_sig_verifier/ic_sig_verifier.wasm -o target/motoko-composed.wasm
+    echo --- Composing done!
 )
