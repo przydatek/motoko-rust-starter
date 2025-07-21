@@ -3,5 +3,6 @@ package motoko:component;
 world motoko {
     import ic-sig-verifier: interface {
         verify-canister-sig: func(args-serialized: list<u8>) -> list<u8>;
+        verify-bls-sig: func(args-serialized: list<u8>) -> list<u8>;
     }
 }

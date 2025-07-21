@@ -37,4 +37,16 @@ impl Guest for IcSigVerifier {
                 .to_vec(),
         }
     }
+
+    fn verify_bls_sig(args_serialized: Vec<u8>) -> Vec<u8> {
+        let _args = match Decode!(&args_serialized, CanisterSigVerifierArgs) {
+            Ok(args) => args,
+            Err(_) => {
+                return "failed parsing arguments of verify_bls_sig"
+                    .as_bytes()
+                    .to_vec()
+            }
+        };
+        return "BLS signature verification is not implemented yet".as_bytes().to_vec()
+    }
 }
