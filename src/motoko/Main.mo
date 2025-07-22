@@ -4,7 +4,7 @@ import {
 } "mo:prim";
 
 import ic_sig_verifier "../wit/ic_sig_verifier";
-
+import meet_and_greet "../wit/meet_and_greet";
 
 import Blob "mo:core/Blob";
 type CanisterSigVerifierArgs = {
@@ -20,7 +20,6 @@ debugPrint("Result Canister Sig with malformed arguments: " # debug_show (decode
 let result2 = ic_sig_verifier.verifyBlsSig("args, serialized");
 debugPrint("Result BLS Sig with malformed arguments: " # debug_show (decodeUtf8(result2)));
 
-
 let dummyArgs : CanisterSigVerifierArgs = {
      message = Blob.fromArray([1, 2, 3]); // Placeholder for message
      signature_cbor = Blob.fromArray([3, 4, 5]); // Placeholder for signature
@@ -32,3 +31,9 @@ debugPrint("Result Canister Sig with dummy arguments: " # debug_show (decodeUtf8
 
 let result4 = ic_sig_verifier.verifyBlsSig(to_candid(dummyArgs));
 debugPrint("Result BLS Sig with dummy arguments: " # debug_show (decodeUtf8(result4)));
+
+let result5 = meet_and_greet.sayHello("Bob");
+debugPrint("Result Say Hello: " # debug_show (decodeUtf8(result5)));
+
+let result6 = ic_sig_verifier.verifyBlsSig(to_candid(dummyArgs));
+debugPrint("Result Say Goodbye: " # debug_show (decodeUtf8(result6)));

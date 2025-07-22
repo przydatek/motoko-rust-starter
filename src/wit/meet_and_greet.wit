@@ -1,0 +1,6 @@
+package root:meet-and-greet;
+
+world meet-and-greet {
+  export say-hello: func(guest-name: list<u8>) -> list<u8>;
+  export say-goodbye: func(guest-name: list<u8>) -> list<u8>;
+}

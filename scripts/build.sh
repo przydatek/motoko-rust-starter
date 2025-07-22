@@ -1,7 +1,9 @@
 #!/bin/bash
 export TARGET=wasm32-unknown-unknown
 export BUILD_MODE=release
+export MOC_UNLOCK_PRIM=true
 export MOPS_DIR=mops
+export CORE_DIR="../motoko-core/src"
 (
     cd "$(dirname "$0")/.." &&
 
@@ -17,7 +19,7 @@ export MOPS_DIR=mops
     # TODO: replace with `$(dfx cache show)/moc`
     echo ... running moc...
     # nix-shell ../motoko/nix/shell.nix --run "../motoko/bin/moc -wasi-system-api -wasm-components src/motoko/Main.mo -o target/motoko.wasm" &&
-    ../motoko/bin/moc -wasi-system-api -wasm-components --package core ../motoko-core/src/ src/motoko/Main.mo -o target/motoko.wasm &&
+    ../motoko/bin/moc -wasi-system-api -wasm-components --package core $CORE_DIR src/motoko/Main.mo -o target/motoko.wasm &&
     echo ... running embed...
     wasm-tools component embed src/wit/motoko.wit target/motoko.wasm -o target/motoko-embed.wasm &&
     echo ... creating component...
