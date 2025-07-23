@@ -1,9 +1,12 @@
 package motoko:composition;
 
-let rust = new rust:component {};
+let ic-sig-verifier = new rust:ic-sig-verifier {};
+let meet-and-greet = new rust:meet-and-greet {};
+
 
 let motoko = new motoko:component {
-    ic-sig-verifier: rust,
+    ic-sig-verifier: ic-sig-verifier,
+    meet-and-greet: meet-and-greet,
     ...
 };
 

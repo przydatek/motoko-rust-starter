@@ -39,10 +39,16 @@ We can remove this step after merging the corresponding PR.
 
 The starter project includes Bash files in the `/scripts` directory to create and run a Motoko + Rust component.
 
-**Build the component:**
+**Build the imported Rust components:**
 
 ```sh
-scripts/build.sh
+scripts/build_rust.sh
+```
+
+**Build the Motoko component:**
+
+```sh
+scripts/build_motoko.sh
 ```
 
 **Build and run in Wasmtime:**

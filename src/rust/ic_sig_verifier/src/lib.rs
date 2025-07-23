@@ -1,5 +1,5 @@
 wit_bindgen::generate!({
-    path: "src/wit/ic_sig_verifier.wit",
+    path: "ic_sig_verifier.wit",
     world: "ic-sig-verifier",
 });
 

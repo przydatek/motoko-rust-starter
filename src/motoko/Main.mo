@@ -3,8 +3,8 @@ import {
     decodeUtf8;
 } "mo:prim";
 
-import ic_sig_verifier "../wit/ic_sig_verifier";
-import meet_and_greet "../wit/meet_and_greet";
+import ic_sig_verifier "../../mops/ic_sig_verifier";
+import meet_and_greet "../../mops/meet_and_greet";
 
 import Blob "mo:core/Blob";
 type CanisterSigVerifierArgs = {
@@ -35,5 +35,5 @@ debugPrint("Result BLS Sig with dummy arguments: " # debug_show (decodeUtf8(resu
 let result5 = meet_and_greet.sayHello("Bob");
 debugPrint("Result Say Hello: " # debug_show (decodeUtf8(result5)));
 
-let result6 = ic_sig_verifier.verifyBlsSig(to_candid(dummyArgs));
+let result6 = meet_and_greet.sayGoodbye("Alice");
 debugPrint("Result Say Goodbye: " # debug_show (decodeUtf8(result6)));

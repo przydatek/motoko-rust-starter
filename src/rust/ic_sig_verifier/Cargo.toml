@@ -8,7 +8,7 @@ package = "rust:ic-sig-verifier-component"
 
 [lib]
 crate-type = ["cdylib"]
-path = "src/rust/lib.rs"
+path = "src/lib.rs"
 
 [dependencies]
 candid = "0.6"
