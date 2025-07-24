@@ -1,4 +1,4 @@
-package root:meet-and-greet;
+package component:meet-and-greet;
 
 world meet-and-greet {
   export say-hello: func(guest-name: list<u8>) -> list<u8>;

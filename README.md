@@ -19,40 +19,74 @@ It's currently possible to call a function with a `Blob` input and return value,
 * [Wasmtime](https://github.com/bytecodealliance/wasmtime#readme)
 * [`wasm-tools`](https://github.com/bytecodealliance/wasm-tools#readme)
 * [`wac`](https://github.com/bytecodealliance/wac#readme)
-* [`dfx`](https://support.dfinity.org/hc/en-us/articles/10552713577364-How-do-I-install-dfx)
 
-### Motoko Compiler
+### Motoko Compiler and Libraries
 
-Since cross-language support relies on [this unmerged PR](https://github.com/dfinity/motoko/pull/4580), it's currently necessary to use a custom version of the Motoko compiler. You can set this up with the following steps:
+Since cross-language support relies on [this unmerged PR](https://github.com/dfinity/motoko/pull/5334), it's currently
+necessary to use a custom version of the Motoko compiler. You can set this up with the following steps:
 
 ```sh
 # Open a terminal in the root of this repository
 cd ..
 git clone https://github.com/dfinity/motoko.git
 cd motoko
-git checkout ryan/component-call
+git checkout bartosz/components-mvp
+nix develop
+cd src
+make moc
+```
+Moreover, to compile the example Motoko application that imports components,
+we need Motoko's core library.  Set it up as follows
+
+```sh
+# Open a terminal in the root of this repository
+cd ..
+git clone git@github.com:dfinity/motoko-core.git
 ```
 
-We can remove this step after merging the corresponding PR.
+When the setup is done, your GitHub-folder should have three repos at the same level:
+
+- `github/motoko-rust-starter/`  (i.e. this repo)
+- `github/motoko/` (Motoko compiler at branch bartosz/components-mvp)
+- `github/motoko-core/` (Motoko core library)
 
 ### 📜 Scripts
 
 The starter project includes Bash files in the `/scripts` directory to create and run a Motoko + Rust component.
 
-**Build the imported Rust components:**
+**Building the imported Rust components**
+
+Rust components are pre-built in `/mops/components/`-folder, but one
+can use `build_rust.sh` to re-build the components if needed.
+
+NOTE: This script may fail when run in Motoko's development nix-shell.
+If this happens, run it in a separate shell with your regular Rust development setup.
 
 ```sh
-scripts/build_rust.sh
+./scripts/build_rust.sh
 ```
+`build_rust.sh` first builds the components, and then copies the relevant files
+to `mops/components/` as "distribution".  The layout of the distributed components
+is somewhat weird (and needs improvements), as it tries to accommodate for conventions/limitations imposed
+by the relevant tooling, see comments in `build_rust.sh` for details.
 
-**Build the Motoko component:**
+**Build the Motoko component and the composed WASM binary**
+
+This script should be run in Motoko's development nix-shell,
+with moc-compiler built using PR https://github.com/dfinity/motoko/pull/5334"
 
 ```sh
-scripts/build_motoko.sh
+./scripts/build_motoko.sh
 ```
+When the modified `moc`-compiler is run by the above script, it generates on-the-fly two files:
+- `target/motoko.wit`, needed for generating the Motoko-component binary `target/motoko-component.wasm`,
+- `target/motoko.wac`, needed for generating the composed final binary `target/motoko-composed.wasm`,
+   that can be run on `wasmtime`
 
-**Build and run in Wasmtime:**
+The generation of these WASM-files happens subsequently in the script, using `wasm-tools` and `wac`-binaries.
+
+**Build Motoko and run in Wasmtime:**
 
 ```sh
-scripts/run.sh
+./scripts/run.sh
 ```

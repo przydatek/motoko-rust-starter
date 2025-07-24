@@ -3,8 +3,8 @@ import {
     decodeUtf8;
 } "mo:prim";
 
-import ic_sig_verifier "../../mops/ic_sig_verifier";
-import meet_and_greet "../../mops/meet_and_greet";
+import ic_sig_verifier "../../mops/component/ic_sig_verifier";
+import meet_and_greet "../../mops/component/meet_and_greet";
 
 import Blob "mo:core/Blob";
 type CanisterSigVerifierArgs = {

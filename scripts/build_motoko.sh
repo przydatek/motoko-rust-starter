@@ -1,8 +1,10 @@
 #!/bin/bash
 source "$(dirname "$0")/set_env.sh"
-
 export MOC_UNLOCK_PRIM=true
 export MOTOKO_CORE_DIR="../motoko-core/src"
+
+echo "INFO: $0 should be run in Motoko's development nix-shell,"
+echo "      with moc-compiler built using PR https://github.com/dfinity/motoko/pull/5334"
 
 ROOT_DIR=$(dirname "$(realpath $0)")/../
 
@@ -22,6 +24,6 @@ wasm-tools component embed target/motoko.wit target/motoko.wasm -o target/motoko
 echo ... creating component...
 wasm-tools component new target/motoko-embed.wasm -v -o target/motoko-component.wasm --adapt wasi_snapshot_preview1=target/wasi-adapter.wasm &&
 echo --- Composing components...
-wac compose src/wac/composition.wac -d motoko:component=target/motoko-component.wasm -d rust:ic-sig-verifier=$MOPS_DIR/ic_sig_verifier/ic_sig_verifier.wasm -d rust:meet-and-greet=$MOPS_DIR/meet_and_greet/meet_and_greet.wasm -o target/motoko-composed.wasm
+wac compose target/motoko.wac -d motoko:component=target/motoko-component.wasm --deps-dir mops/ -o target/motoko-composed.wasm
 echo --- Composing done!
 
