@@ -97,8 +97,8 @@ The generation of these WASM-files happens subsequently in the script, using `wa
   would be an extension to handling functions with multiple (`Blob`) arguments
 - handles only Blob arguments and return values (mapping them to `list<u8>` in WIT).
   It would be good to add (as a subsequent extension) handling of other types (`Nat32`/`u32`, `Text`/`string`)
-- the expected layout of the distributed components (cf. `[/mops/components/](./mops/components/)`)
+- the expected layout of the distributed components (cf. [mops/components/](./mops/components/))
   is somewhat weird (and should be changed), due to various conventions wrt. underscore- and hyphen-characters,
-  see comments in `[build_rust.sh](./scripts/build_rust.sh)` for more info
+  see comments in [build_rust.sh](./scripts/build_rust.sh) for more info
 - the generated Motoko binaries use hard-coded motoko-string in their names; instead the binaries's names should
   probably depend on the name of the Motoko sources.
