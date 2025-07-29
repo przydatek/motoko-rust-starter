@@ -32,8 +32,8 @@ git clone https://github.com/dfinity/motoko.git
 cd motoko
 git checkout bartosz/components-mvp
 nix develop
-cd src
-make moc
+make -C src moc
+make -C rts
 ```
 Moreover, to compile the example Motoko application that imports components,
 we need Motoko's core library.  Set it up as follows
