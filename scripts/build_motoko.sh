@@ -24,6 +24,6 @@ wasm-tools component embed target/motoko.wit target/motoko.wasm -o target/motoko
 echo ... creating component... &&
 wasm-tools component new target/motoko-embed.wasm -v -o target/motoko-component.wasm --adapt wasi_snapshot_preview1=target/wasi-adapter.wasm &&
 echo --- Composing components... &&
-wac encode target/motoko.wac -d motoko:component=target/motoko-component.wasm --deps-dir mops/ -o target/motoko-composed.wasm &&
+wac compose target/motoko.wac -d motoko:component=target/motoko-component.wasm --deps-dir mops/ -o target/motoko-composed.wasm &&
 echo --- Composing done!
 
