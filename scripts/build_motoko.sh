@@ -15,15 +15,15 @@ if [ -f target/wasi-adapter.wasm  ]; then
 else
   echo "--- Downloading WASI adapter wasi_snapshot_preview1 to target/wasi-adapter.wasm ..."
   ( curl -L https://github.com/bytecodealliance/wasmtime/releases/download/v22.0.1/wasi_snapshot_preview1.command.wasm -o target/wasi-adapter.wasm )
-fi
-echo --- Building Motoko component...
-echo ... running moc...
+fi &&
+echo --- Building Motoko component... &&
+echo ... running moc... &&
 ../motoko/bin/moc src/motoko/Main.mo -wasi-system-api -wasm-components --package core $MOTOKO_CORE_DIR -o target/motoko.wasm &&
-echo ... running embed...
+echo ... running embed... &&
 wasm-tools component embed target/motoko.wit target/motoko.wasm -o target/motoko-embed.wasm &&
-echo ... creating component...
+echo ... creating component... &&
 wasm-tools component new target/motoko-embed.wasm -v -o target/motoko-component.wasm --adapt wasi_snapshot_preview1=target/wasi-adapter.wasm &&
-echo --- Composing components...
-wac compose target/motoko.wac -d motoko:component=target/motoko-component.wasm --deps-dir mops/ -o target/motoko-composed.wasm
+echo --- Composing components... &&
+wac compose target/motoko.wac -d motoko:component=target/motoko-component.wasm --deps-dir mops/ -o target/motoko-composed.wasm &&
 echo --- Composing done!
 
