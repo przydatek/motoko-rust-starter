@@ -26,10 +26,10 @@ let dummyArgs : CanisterSigVerifierArgs = {
 };
 
 let result3 = ic_sig_verifier.verifyCanisterSig(to_candid (dummyArgs));
-debugPrint("Result Canister Sig with dummy arguments: " # debug_show (decodeUtf8(result3)));
+debugPrint("Result Canister Sig with dummy arguments (single): " # debug_show (decodeUtf8(result3)));
 
-// let result3D = ic_sig_verifier.verifyCanisterSigDirect(dummyArgs.message, dummyArgs.signature_cbor, dummyArgs.public_key_der);
-// debugPrint("Result Canister Sig with dummy arguments: " # debug_show (decodeUtf8(result3D)));
+let result3D = ic_sig_verifier.verifyCanisterSigDirect(dummyArgs.message, dummyArgs.signature_cbor, dummyArgs.public_key_der);
+debugPrint("Result Canister Sig with dummy arguments (multi ): " # debug_show (decodeUtf8(result3D)));
 
 let result4 = ic_sig_verifier.verifyBlsSig(to_candid (dummyArgs));
 debugPrint("Result BLS Sig with dummy arguments: " # debug_show (decodeUtf8(result4)));
