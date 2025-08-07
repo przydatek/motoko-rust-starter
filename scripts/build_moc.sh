@@ -12,8 +12,7 @@ cd "$MOTOKO_DIR"
 # Build moc
 nix develop --command bash -c "
   make -C src moc &&
-  make -C rts &&
-  wasmtime run target/motoko-composed.wasm
+  make -C rts
 "
 
 # Switch to nix develop shell where `moc` is available in the PATH
