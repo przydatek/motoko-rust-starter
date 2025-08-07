@@ -3,4 +3,6 @@ package component:meet-and-greet;
 world meet-and-greet {
   export say-hello: func(guest-name: list<u8>) -> list<u8>;
   export say-goodbye: func(guest-name: list<u8>) -> list<u8>;
+  export concat0: func() -> list<u8>;
+  export concat2: func(a: list<u8>, b: list<u8>) -> list<u8>;
 }

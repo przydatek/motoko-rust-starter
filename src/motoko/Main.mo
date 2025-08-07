@@ -39,3 +39,9 @@ debugPrint("Result Say Hello: " # debug_show (decodeUtf8(result5)));
 
 let result6 = meet_and_greet.sayGoodbye("Alice");
 debugPrint("Result Say Goodbye: " # debug_show (decodeUtf8(result6)));
+
+let resultConcat0 = meet_and_greet.concat0();
+debugPrint("Result Concat0: " # debug_show (decodeUtf8(resultConcat0)));
+
+let resultConcat2 = meet_and_greet.concat2("Hello", "World");
+debugPrint("Result Concat2: " # debug_show (decodeUtf8(resultConcat2)));
