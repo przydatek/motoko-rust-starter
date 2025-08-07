@@ -1,0 +1,23 @@
+#!/bin/zsh
+set -e
+
+CURRENT_DIR=$(pwd)
+
+# Use provided directory or default to ../motoko
+MOTOKO_DIR="${1:-../motoko}"
+
+# Navigate to motoko directory
+cd "$MOTOKO_DIR"
+
+# Build moc
+nix develop --command bash -c "
+  make -C src moc &&
+  make -C rts &&
+  wasmtime run target/motoko-composed.wasm
+"
+
+# Switch to nix develop shell where `moc` is available in the PATH
+exec nix develop
+
+# Execute manually after that:
+# cd ../motoko-rust-starter
