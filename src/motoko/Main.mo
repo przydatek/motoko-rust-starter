@@ -8,11 +8,10 @@ import meet_and_greet "../../mops/component/meet_and_greet";
 
 import Blob "mo:core/Blob";
 type CanisterSigVerifierArgs = {
-    message: Blob;
-    signature_cbor: Blob;
-    public_key_der: Blob;
+    message : Blob;
+    signature_cbor : Blob;
+    public_key_der : Blob;
 };
-
 
 let result1 = ic_sig_verifier.verifyCanisterSig("args, serialized");
 debugPrint("Result Canister Sig with malformed arguments: " # debug_show (decodeUtf8(result1)));
@@ -21,15 +20,15 @@ let result2 = ic_sig_verifier.verifyBlsSig("args, serialized");
 debugPrint("Result BLS Sig with malformed arguments: " # debug_show (decodeUtf8(result2)));
 
 let dummyArgs : CanisterSigVerifierArgs = {
-     message = Blob.fromArray([1, 2, 3]); // Placeholder for message
-     signature_cbor = Blob.fromArray([3, 4, 5]); // Placeholder for signature
-     public_key_der = Blob.fromArray([6, 7, 8]); // Placeholder for public key
+    message = Blob.fromArray([1, 2, 3]); // Placeholder for message
+    signature_cbor = Blob.fromArray([3, 4, 5]); // Placeholder for signature
+    public_key_der = Blob.fromArray([6, 7, 8]); // Placeholder for public key
 };
 
-let result3 = ic_sig_verifier.verifyCanisterSig(to_candid(dummyArgs));
+let result3 = ic_sig_verifier.verifyCanisterSig(to_candid (dummyArgs));
 debugPrint("Result Canister Sig with dummy arguments: " # debug_show (decodeUtf8(result3)));
 
-let result4 = ic_sig_verifier.verifyBlsSig(to_candid(dummyArgs));
+let result4 = ic_sig_verifier.verifyBlsSig(to_candid (dummyArgs));
 debugPrint("Result BLS Sig with dummy arguments: " # debug_show (decodeUtf8(result4)));
 
 let result5 = meet_and_greet.sayHello("Bob");

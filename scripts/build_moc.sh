@@ -20,3 +20,5 @@ exec nix develop
 
 # Execute manually after that:
 # cd ../motoko-rust-starter
+# make -C ../motoko/src moc && make -C ../motoko/rts
+# wasmtime run target/motoko-composed.wasm
