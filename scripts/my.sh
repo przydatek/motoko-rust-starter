@@ -9,4 +9,8 @@ CURRENT_DIR=$(pwd)
 MOTOKO_DIR="${1:-../motoko}"
 cd "$MOTOKO_DIR"
 
-nix develop --command bash -c "make -C src moc && make -C rts && cd $CURRENT_DIR && ./scripts/build_motoko.sh"
+nix develop --command bash -c "
+  make -C src moc && make -C rts &&
+  cd $CURRENT_DIR &&
+  ./scripts/build_motoko.sh &&
+  wasmtime run target/motoko-composed.wasm"
