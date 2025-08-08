@@ -47,6 +47,26 @@ impl Guest for IcSigVerifier {
                     .to_vec()
             }
         };
-        return "BLS signature verification is not implemented yet".as_bytes().to_vec()
+        return "BLS signature verification is not implemented yet"
+            .as_bytes()
+            .to_vec();
+    }
+
+    fn verify_canister_sig_direct(
+        message: Vec<u8>,
+        signature_cbor: Vec<u8>,
+        public_key_der: Vec<u8>,
+    ) -> Vec<u8> {
+        match verify_canister_sig(
+            &message,
+            &signature_cbor,
+            &public_key_der,
+            &ic_canister_sig_creation::IC_ROOT_PUBLIC_KEY,
+        ) {
+            Ok(_) => "verification succeeded".as_bytes().to_vec(),
+            Err(err_msg) => format!("verification failed: {}", err_msg)
+                .as_bytes()
+                .to_vec(),
+        }
     }
 }

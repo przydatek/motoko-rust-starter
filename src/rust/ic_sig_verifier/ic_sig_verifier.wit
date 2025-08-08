@@ -2,5 +2,6 @@ package root:ic-sig-verifier;
 
 world ic-sig-verifier {
   export verify-canister-sig: func(args-serialized: list<u8>) -> list<u8>;
+  export verify-canister-sig-direct: func(message: list<u8>, signature-cbor: list<u8>, public-key-der: list<u8>) -> list<u8>;
   export verify-bls-sig: func(args-serialized: list<u8>) -> list<u8>;
 }

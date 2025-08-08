@@ -10,6 +10,9 @@ ROOT_DIR=$(dirname "$(realpath $0)")/../
 
 cd $ROOT_DIR || exit
 
+# Create target directory if it doesn't exist
+mkdir -p target
+
 if [ -f target/wasi-adapter.wasm  ]; then
   echo "--- WASI adapter wasi_snapshot_preview1 is present at target/wasi-adapter.wasm, skipping download"
 else
