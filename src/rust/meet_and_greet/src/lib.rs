@@ -26,4 +26,30 @@ impl Guest for MeetAndGreet {
         )
         .into()
     }
+
+    // Primitives in arguments
+    fn prim_bool(a: bool) -> Vec<u8> {
+        format!("prim_bool: {}", a).into()
+    }
+    fn prim_char(a: char) -> Vec<u8> {
+        format!("prim_char: {}", a).into()
+    }
+    fn prim_u8(a: u8) -> Vec<u8> {
+        format!("prim_u8: {}", a).into()
+    }
+    fn prim_u16(a: u16) -> Vec<u8> {
+        format!("prim_u16: {}", a).into()
+    }
+    fn prim_u32(a: u32) -> Vec<u8> {
+        format!("prim_u32: {}", a).into()
+    }
+    fn prim_i8(a: i8) -> Vec<u8> {
+        format!("prim_i8: {}", a).into()
+    }
+    fn prim_i16(a: i16) -> Vec<u8> {
+        format!("prim_i16: {}", a).into()
+    }
+    fn prim_i32(a: i32) -> Vec<u8> {
+        format!("prim_i32: {}", a).into()
+    }
 }

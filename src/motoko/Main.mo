@@ -45,3 +45,16 @@ debugPrint("Result Concat0: " # debug_show (decodeUtf8(resultConcat0)));
 
 let resultConcat2 = meet_and_greet.concat2("Hello", "World");
 debugPrint("Result Concat2: " # debug_show (decodeUtf8(resultConcat2)));
+
+// Primitives in arguments
+do {
+    debugPrint("Result Prim Bool: " # debug_show (decodeUtf8(meet_and_greet.prim_bool(true))));
+    debugPrint("Result Prim Bool: " # debug_show (decodeUtf8(meet_and_greet.prim_bool(false))));
+    debugPrint("Result Prim Char: " # debug_show (decodeUtf8(meet_and_greet.prim_char('a'))));
+    debugPrint("Result Prim U8: " # debug_show (decodeUtf8(meet_and_greet.prim_u8(123))));
+    debugPrint("Result Prim U16: " # debug_show (decodeUtf8(meet_and_greet.prim_u16(12345))));
+    debugPrint("Result Prim U32: " # debug_show (decodeUtf8(meet_and_greet.prim_u32(1234567890))));
+    debugPrint("Result Prim I8: " # debug_show (decodeUtf8(meet_and_greet.prim_i8(-125))));
+    debugPrint("Result Prim I16: " # debug_show (decodeUtf8(meet_and_greet.prim_i16(-12349))));
+    debugPrint("Result Prim I32: " # debug_show (decodeUtf8(meet_and_greet.prim_i32(-1234567893))));
+};
