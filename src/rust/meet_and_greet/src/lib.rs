@@ -43,6 +43,9 @@ impl Guest for MeetAndGreet {
     fn prim_u32(a: u32) -> Vec<u8> {
         format!("prim_u32: {}", a).into()
     }
+    fn prim_u64(a: u64) -> Vec<u8> {
+        format!("prim_u64: {}", a).into()
+    }
     fn prim_i8(a: i8) -> Vec<u8> {
         format!("prim_i8: {}", a).into()
     }
@@ -52,4 +55,10 @@ impl Guest for MeetAndGreet {
     fn prim_i32(a: i32) -> Vec<u8> {
         format!("prim_i32: {}", a).into()
     }
+    fn prim_i64(a: i64) -> Vec<u8> {
+        format!("prim_i64: {}", a).into()
+    }
+    // fn prim_f64(a: f64) -> Vec<u8> {
+    //     format!("prim_f64: {}", a).into()
+    // }
 }

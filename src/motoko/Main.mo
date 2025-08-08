@@ -54,7 +54,9 @@ do {
     debugPrint("Result Prim U8: " # debug_show (decodeUtf8(meet_and_greet.prim_u8(123))));
     debugPrint("Result Prim U16: " # debug_show (decodeUtf8(meet_and_greet.prim_u16(12345))));
     debugPrint("Result Prim U32: " # debug_show (decodeUtf8(meet_and_greet.prim_u32(1234567890))));
+    debugPrint("Result Prim U64: " # debug_show (decodeUtf8(meet_and_greet.prim_u64(12345678901234567890))));
     debugPrint("Result Prim I8: " # debug_show (decodeUtf8(meet_and_greet.prim_i8(-125))));
     debugPrint("Result Prim I16: " # debug_show (decodeUtf8(meet_and_greet.prim_i16(-12349))));
     debugPrint("Result Prim I32: " # debug_show (decodeUtf8(meet_and_greet.prim_i32(-1234567893))));
+    debugPrint("Result Prim I64: " # debug_show (decodeUtf8(meet_and_greet.prim_i64(-1234567890123456789))));
 };
