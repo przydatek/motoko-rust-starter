@@ -59,4 +59,5 @@ do {
     debugPrint("Result Prim I16: " # debug_show (decodeUtf8(meet_and_greet.prim_i16(-12349))));
     debugPrint("Result Prim I32: " # debug_show (decodeUtf8(meet_and_greet.prim_i32(-1234567893))));
     debugPrint("Result Prim I64: " # debug_show (decodeUtf8(meet_and_greet.prim_i64(-1234567890123456789))));
+    debugPrint("Result Prim F64: " # debug_show (decodeUtf8(meet_and_greet.prim_f64(1234567890.1234567))));
 };

@@ -16,4 +16,5 @@ world meet-and-greet {
   export prim-i16: func(a: s16) -> list<u8>;
   export prim-i32: func(a: s32) -> list<u8>;
   export prim-i64: func(a: s64) -> list<u8>;
+  export prim-f64: func(a: f64) -> list<u8>;
 }

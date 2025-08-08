@@ -58,7 +58,7 @@ impl Guest for MeetAndGreet {
     fn prim_i64(a: i64) -> Vec<u8> {
         format!("prim_i64: {}", a).into()
     }
-    // fn prim_f64(a: f64) -> Vec<u8> {
-    //     format!("prim_f64: {}", a).into()
-    // }
+    fn prim_f64(a: f64) -> Vec<u8> {
+        format!("prim_f64: {}", a).into()
+    }
 }
