@@ -6,15 +6,15 @@ world meet-and-greet {
   export concat0: func() -> list<u8>;
   export concat2: func(a: list<u8>, b: list<u8>) -> list<u8>;
 
-  export prim-bool: func(a: bool) -> list<u8>;
-  export prim-char: func(a: char) -> list<u8>;
-  export prim-u8: func(a: u8) -> list<u8>;
-  export prim-u16: func(a: u16) -> list<u8>;
-  export prim-u32: func(a: u32) -> list<u8>;
-  export prim-u64: func(a: u64) -> list<u8>;
-  export prim-i8: func(a: s8) -> list<u8>;
-  export prim-i16: func(a: s16) -> list<u8>;
-  export prim-i32: func(a: s32) -> list<u8>;
-  export prim-i64: func(a: s64) -> list<u8>;
-  export prim-f64: func(a: f64) -> list<u8>;
+  export prim-bool: func(a: bool) -> bool;
+  export prim-char: func(a: char) -> char;
+  export prim-u8: func(a: u8) -> u8;
+  export prim-u16: func(a: u16) -> u16;
+  export prim-u32: func(a: u32) -> u32;
+  export prim-u64: func(a: u64) -> u64;
+  export prim-i8: func(a: s8) -> s8;
+  export prim-i16: func(a: s16) -> s16;
+  export prim-i32: func(a: s32) -> s32;
+  export prim-i64: func(a: s64) -> s64;
+  export prim-f64: func(a: f64) -> f64;
 }
