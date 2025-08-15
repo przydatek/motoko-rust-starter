@@ -73,4 +73,5 @@ do {
     test("Prim I32", debug_show meet_and_greet.prim_i32(-1234567893), "-1_234_567_893");
     test("Prim I64", debug_show meet_and_greet.prim_i64(-1234567890123456789), "-1_234_567_890_123_456_789");
     test("Prim F64", debug_show meet_and_greet.prim_f64(1234567890.123457), "1234567890.123457");
+    test("Prim Text", meet_and_greet.prim_text("Hello; emoji: ☃❄🌨; FooBär☃"), "Hello; emoji: ☃❄🌨; FooBär☃!");
 };

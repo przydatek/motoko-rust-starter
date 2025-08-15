@@ -61,4 +61,7 @@ impl Guest for MeetAndGreet {
     fn prim_f64(a: f64) -> f64 {
         a
     }
+    fn prim_string(a: String) -> String {
+        a + "!"
+    }
 }

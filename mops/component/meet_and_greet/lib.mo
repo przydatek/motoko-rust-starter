@@ -14,4 +14,5 @@ module meet_and_greet {
     public func prim_i32(a : Int32) : Int32 = ((prim "component:meet-and-greet:prim-i32") : Int32 -> Int32)(a);
     public func prim_i64(a : Int64) : Int64 = ((prim "component:meet-and-greet:prim-i64") : Int64 -> Int64)(a);
     public func prim_f64(a : Float) : Float = ((prim "component:meet-and-greet:prim-f64") : Float -> Float)(a);
+    public func prim_text(a : Text) : Text = ((prim "component:meet-and-greet:prim-string") : Text -> Text)(a);
 };
