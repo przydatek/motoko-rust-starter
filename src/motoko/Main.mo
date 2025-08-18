@@ -1,12 +1,28 @@
 import {
     debugPrint;
     decodeUtf8;
+    trap;
 } "mo:prim";
 
 import ic_sig_verifier "../../mops/component/ic_sig_verifier";
 import meet_and_greet "../../mops/component/meet_and_greet";
 
 import Blob "mo:core/Blob";
+
+func testBlobText(msg : Text, actual : Blob, expected : Text) {
+    let ?actualText = decodeUtf8(actual) else trap("Failed to decode blob to text");
+    test(msg, actualText, expected);
+};
+func test(msg : Text, actual : Text, expected : Text) {
+    if (actual == expected) {
+        debugPrint("✅ " # msg # " " # actual);
+    } else {
+        debugPrint("❌ " # msg);
+        debugPrint("Expected: " # expected);
+        debugPrint("Actual: " # actual);
+    };
+};
+
 type CanisterSigVerifierArgs = {
     message : Blob;
     signature_cbor : Blob;
@@ -40,24 +56,32 @@ debugPrint("Result Say Hello: " # debug_show (decodeUtf8(result5)));
 let result6 = meet_and_greet.sayGoodbye("Alice");
 debugPrint("Result Say Goodbye: " # debug_show (decodeUtf8(result6)));
 
-let resultConcat0 = meet_and_greet.concat0();
-debugPrint("Result Concat0: " # debug_show (decodeUtf8(resultConcat0)));
+testBlobText("Concat0: ", meet_and_greet.concat0(), "concat0");
+testBlobText("Concat2: ", meet_and_greet.concat2("Hello", "World"), "concat2: Hello World");
 
-let resultConcat2 = meet_and_greet.concat2("Hello", "World");
-debugPrint("Result Concat2: " # debug_show (decodeUtf8(resultConcat2)));
-
-// Primitives in arguments
+// Primitives in arguments and the return value
 do {
-    debugPrint("Result Prim Bool: " # debug_show (decodeUtf8(meet_and_greet.prim_bool(true))));
-    debugPrint("Result Prim Bool: " # debug_show (decodeUtf8(meet_and_greet.prim_bool(false))));
-    debugPrint("Result Prim Char: " # debug_show (decodeUtf8(meet_and_greet.prim_char('a'))));
-    debugPrint("Result Prim U8: " # debug_show (decodeUtf8(meet_and_greet.prim_u8(123))));
-    debugPrint("Result Prim U16: " # debug_show (decodeUtf8(meet_and_greet.prim_u16(12345))));
-    debugPrint("Result Prim U32: " # debug_show (decodeUtf8(meet_and_greet.prim_u32(1234567890))));
-    debugPrint("Result Prim U64: " # debug_show (decodeUtf8(meet_and_greet.prim_u64(12345678901234567890))));
-    debugPrint("Result Prim I8: " # debug_show (decodeUtf8(meet_and_greet.prim_i8(-125))));
-    debugPrint("Result Prim I16: " # debug_show (decodeUtf8(meet_and_greet.prim_i16(-12349))));
-    debugPrint("Result Prim I32: " # debug_show (decodeUtf8(meet_and_greet.prim_i32(-1234567893))));
-    debugPrint("Result Prim I64: " # debug_show (decodeUtf8(meet_and_greet.prim_i64(-1234567890123456789))));
-    debugPrint("Result Prim F64: " # debug_show (decodeUtf8(meet_and_greet.prim_f64(1234567890.1234567))));
+    test("Prim Bool", debug_show meet_and_greet.prim_bool(true), "true");
+    test("Prim Bool", debug_show meet_and_greet.prim_bool(false), "false");
+    test("Prim Char", debug_show meet_and_greet.prim_char('a'), "'a'");
+    test("Prim U8", debug_show meet_and_greet.prim_u8(123), "123");
+    test("Prim U16", debug_show meet_and_greet.prim_u16(12345), "12_345");
+    test("Prim U32", debug_show meet_and_greet.prim_u32(1234567890), "1_234_567_890");
+    test("Prim U64", debug_show meet_and_greet.prim_u64(12345678901234567890), "12_345_678_901_234_567_890");
+    test("Prim I8", debug_show meet_and_greet.prim_i8(-125), "-125");
+    test("Prim I16", debug_show meet_and_greet.prim_i16(-12349), "-12_349");
+    test("Prim I32", debug_show meet_and_greet.prim_i32(-1234567893), "-1_234_567_893");
+    test("Prim I64", debug_show meet_and_greet.prim_i64(-1234567890123456789), "-1_234_567_890_123_456_789");
+    test("Prim F64", debug_show meet_and_greet.prim_f64(1234567890.123457), "1234567890.123457");
+    test("Prim Text", meet_and_greet.prim_text("Hello; emoji: ☃❄🌨; FooBär☃"), "Hello; emoji: ☃❄🌨; FooBär☃!");
+    test("Vec U16", meet_and_greet.vec_u16([1, 2, 3]), "vec_u16: 1, 2, 3");
+    test("Vec Text", meet_and_greet.vec_text(["Hello", "World"]), "vec_string: Hello, World");
+    test("Vec U8", meet_and_greet.vec_u8([1, 2, 3, 4]), "vec_u8: 1, 2, 3, 4");
+    test("Vec U32", meet_and_greet.vec_u32([10, 20, 30]), "vec_u32: 10, 20, 30");
+    test("Vec I32", meet_and_greet.vec_i32([-1, -2, 3]), "vec_i32: -1, -2, 3");
+    test("Vec I64", meet_and_greet.vec_i64([-1, -2, 3]), "vec_i64: -1, -2, 3");
+    test("Vec Bool", meet_and_greet.vec_bool([true, false, true]), "vec_bool: true, false, true");
+    test("Vec Text Nested", meet_and_greet.vec_text_nested([["A", "B"], ["C"]]), "vec_string_nested: A|B; C");
+    test("Vec Char", meet_and_greet.vec_char(['a', 'b', 'c']), "vec_char: abc");
+    test("Vec F64", meet_and_greet.vec_f64([1.25, -2.5, 3.0]), "vec_f64: 1.25, -2.5, 3");
 };
