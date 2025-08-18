@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# USAGE:
+# 1. ./scripts/test.sh to compile and run the successful version (this generates files in target/)
+# 2. ./debug.sh 0 to save the dump of the successful version
+# 3. Change the code, e.g. uncomment failing tests in Main.mo
+# 4. ./scripts/test.sh to compile and run the failing version
+# 5. ./debug.sh 1 to save the dump of the failing version
+# 6. ./debug.sh (without argument) to perform a diff between the two versions
+# 7. Inspect the .diff and .txt files in the target/ directory
+
 # Read Input: Version 0 or 1 or diff
 VERSION=$1
 
