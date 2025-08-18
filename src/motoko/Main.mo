@@ -74,4 +74,14 @@ do {
     test("Prim I64", debug_show meet_and_greet.prim_i64(-1234567890123456789), "-1_234_567_890_123_456_789");
     test("Prim F64", debug_show meet_and_greet.prim_f64(1234567890.123457), "1234567890.123457");
     test("Prim Text", meet_and_greet.prim_text("Hello; emoji: ☃❄🌨; FooBär☃"), "Hello; emoji: ☃❄🌨; FooBär☃!");
+    test("Vec U16", meet_and_greet.vec_u16([1, 2, 3]), "vec_u16: 1, 2, 3");
+    test("Vec Text", meet_and_greet.vec_text(["Hello", "World"]), "vec_string: Hello, World");
+    test("Vec U8", meet_and_greet.vec_u8([1, 2, 3, 4]), "vec_u8: 1, 2, 3, 4");
+    test("Vec U32", meet_and_greet.vec_u32([10, 20, 30]), "vec_u32: 10, 20, 30");
+    test("Vec I32", meet_and_greet.vec_i32([-1, -2, 3]), "vec_i32: -1, -2, 3");
+    test("Vec I64", meet_and_greet.vec_i64([-1, -2, 3]), "vec_i64: -1, -2, 3");
+    test("Vec Bool", meet_and_greet.vec_bool([true, false, true]), "vec_bool: true, false, true");
+    test("Vec Text Nested", meet_and_greet.vec_text_nested([["A", "B"], ["C"]]), "vec_string_nested: A|B; C");
+    test("Vec Char", meet_and_greet.vec_char(['a', 'b', 'c']), "vec_char: abc");
+    test("Vec F64", meet_and_greet.vec_f64([1.25, -2.5, 3.0]), "vec_f64: 1.25, -2.5, 3");
 };

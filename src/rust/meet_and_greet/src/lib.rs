@@ -64,4 +64,89 @@ impl Guest for MeetAndGreet {
     fn prim_string(a: String) -> String {
         a + "!"
     }
+
+    fn vec_u16(a: Vec<u16>) -> String {
+        format!(
+            "vec_u16: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_string(a: Vec<String>) -> String {
+        format!(
+            "vec_string: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_u8(a: Vec<u8>) -> String {
+        format!(
+            "vec_u8: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_u32(a: Vec<u32>) -> String {
+        format!(
+            "vec_u32: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_i32(a: Vec<i32>) -> String {
+        format!(
+            "vec_i32: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_i64(a: Vec<i64>) -> String {
+        format!(
+            "vec_i64: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_bool(a: Vec<bool>) -> String {
+        format!(
+            "vec_bool: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
+    fn vec_string_nested(a: Vec<Vec<String>>) -> String {
+        let inner = a
+            .iter()
+            .map(|inner| inner.join("|"))
+            .collect::<Vec<String>>()
+            .join("; ");
+        format!("vec_string_nested: {}", inner)
+    }
+    fn vec_char(a: Vec<char>) -> String {
+        let s: String = a.into_iter().collect();
+        format!("vec_char: {}", s)
+    }
+    fn vec_f64(a: Vec<f64>) -> String {
+        format!(
+            "vec_f64: {}",
+            a.iter()
+                .map(|x| x.to_string())
+                .collect::<Vec<String>>()
+                .join(", ")
+        )
+    }
 }

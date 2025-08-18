@@ -15,4 +15,15 @@ module meet_and_greet {
     public func prim_i64(a : Int64) : Int64 = ((prim "component:meet-and-greet:prim-i64") : Int64 -> Int64)(a);
     public func prim_f64(a : Float) : Float = ((prim "component:meet-and-greet:prim-f64") : Float -> Float)(a);
     public func prim_text(a : Text) : Text = ((prim "component:meet-and-greet:prim-string") : Text -> Text)(a);
+
+    public func vec_u16(a : [Nat16]) : Text = ((prim "component:meet-and-greet:vec-u16") : [Nat16] -> Text)(a);
+    public func vec_text(a : [Text]) : Text = ((prim "component:meet-and-greet:vec-string") : [Text] -> Text)(a);
+    public func vec_u8(a : [Nat8]) : Text = ((prim "component:meet-and-greet:vec-u8") : [Nat8] -> Text)(a);
+    public func vec_u32(a : [Nat32]) : Text = ((prim "component:meet-and-greet:vec-u32") : [Nat32] -> Text)(a);
+    public func vec_i32(a : [Int32]) : Text = ((prim "component:meet-and-greet:vec-i32") : [Int32] -> Text)(a);
+    public func vec_i64(a : [Int64]) : Text = ((prim "component:meet-and-greet:vec-i64") : [Int64] -> Text)(a);
+    public func vec_bool(a : [Bool]) : Text = ((prim "component:meet-and-greet:vec-bool") : [Bool] -> Text)(a);
+    public func vec_text_nested(a : [[Text]]) : Text = ((prim "component:meet-and-greet:vec-string-nested") : [[Text]] -> Text)(a);
+    public func vec_char(a : [Char]) : Text = ((prim "component:meet-and-greet:vec-char") : [Char] -> Text)(a);
+    public func vec_f64(a : [Float]) : Text = ((prim "component:meet-and-greet:vec-f64") : [Float] -> Text)(a);
 };

@@ -18,4 +18,15 @@ world meet-and-greet {
   export prim-i64: func(a: s64) -> s64;
   export prim-f64: func(a: f64) -> f64;
   export prim-string: func(a: string) -> string;
+
+  export vec-u16: func(a: list<u16>) -> string;
+  export vec-string: func(a: list<string>) -> string;
+  export vec-u8: func(a: list<u8>) -> string;
+  export vec-u32: func(a: list<u32>) -> string;
+  export vec-i32: func(a: list<s32>) -> string;
+  export vec-i64: func(a: list<s64>) -> string;
+  export vec-bool: func(a: list<bool>) -> string;
+  export vec-string-nested: func(a: list<list<string>>) -> string;
+  export vec-char: func(a: list<char>) -> string;
+  export vec-f64: func(a: list<f64>) -> string;
 }
