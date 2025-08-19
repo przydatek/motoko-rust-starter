@@ -59,22 +59,6 @@ debugPrint("Result Say Goodbye: " # debug_show (decodeUtf8(result6)));
 testBlobText("Concat0: ", meet_and_greet.concat0(), "concat0");
 testBlobText("Concat2: ", meet_and_greet.concat2("Hello", "World"), "concat2: Hello World");
 
-module Bug1 {
-    public func works() {
-        test("WORKS: Prim Text In", debug_show meet_and_greet.prim_text_in("Hello; emoji: ☃❄🌨; FooBär☃"), "+36");
-        test("WORKS: Prim Text In", debug_show meet_and_greet.prim_text_in("Hello; emoji: ☃❄🌨; FooBär☃"), "+36");
-        test("WORKS: Prim Text In", debug_show meet_and_greet.prim_text_in("Hello; emoji: ☃❄🌨; FooBär☃"), "+36");
-        test("WORKS: Vec F64", meet_and_greet.vec_f64([1.25, -2.5, 3.0]), "vec_f64: 1.25, -2.5, 3");
-    };
-    public func fails() {
-        test("FAILS: Prim Text In", debug_show meet_and_greet.prim_text_in("Hello; emoji: ☃❄🌨; FooBär☃"), "+36");
-        test("FAILS: Prim Text In", debug_show meet_and_greet.prim_text_in("Hello; emoji: ☃❄🌨; FooBär☃"), "+36");
-        test("FAILS: Vec F64", meet_and_greet.vec_f64([1.25, -2.5, 3.0]), "vec_f64: 1.25, -2.5, 3");
-    };
-};
-Bug1.works();
-// Bug1.fails(); // TODO: uncomment to see the failure
-
 // Primitives in arguments and the return value
 do {
     test("Prim Bool", debug_show meet_and_greet.prim_bool(true), "true");
@@ -97,7 +81,7 @@ do {
     test("Vec U8", meet_and_greet.vec_u8([1, 2, 3, 4]), "vec_u8: 1, 2, 3, 4");
     test("Vec U32", meet_and_greet.vec_u32([10, 20, 30]), "vec_u32: 10, 20, 30");
     test("Vec I32", meet_and_greet.vec_i32([-1, -2, 3]), "vec_i32: -1, -2, 3");
-    // test("Vec I64", meet_and_greet.vec_i64([-1, -2, 3]), "vec_i64: -1, -2, 3"); // TODO
+    test("Vec I64", meet_and_greet.vec_i64([-1, -2, 3]), "vec_i64: -1, -2, 3"); // TODO
     test("Vec Bool", meet_and_greet.vec_bool([true, false, true]), "vec_bool: true, false, true");
     test("Vec Text Nested", meet_and_greet.vec_text_nested([["A", "B"], ["C"]]), "vec_string_nested: A|B; C");
     test("Vec Char", meet_and_greet.vec_char(['a', 'b', 'c']), "vec_char: abc");
