@@ -68,7 +68,7 @@ If this happens, run it in a separate shell with your regular Rust development s
 `build_rust.sh` first builds the components, and then copies the relevant files
 to `mops/components/` as "distribution".  The layout of the distributed components
 is somewhat weird (and needs improvements), as it tries to accommodate for conventions/limitations imposed
-by the relevant tooling, see comments in `build_rust.sh` for details.
+by the relevant tooling, see comments in [`build_rust.sh`](./scripts/build_rust.sh) for details.
 
 **Build the Motoko component and the composed WASM binary**
 
@@ -93,10 +93,8 @@ The generation of these WASM-files happens subsequently in the script, using `wa
 
 **Current main limitations/known issues, roughly in the order of priorities**
 
-- can import only functions with signature `fn(Blob)->Blob`, hence the next step
-  would be an extension to handling functions with multiple (`Blob`) arguments
-- handles only Blob arguments and return values (mapping them to `list<u8>` in WIT).
-  It would be good to add (as a subsequent extension) handling of other types (`Nat32`/`u32`, `Text`/`string`)
+- compiling a Motoko source that uses components requires setting `MOC_UNLOCK_PRIM` env variable.
+- supports only a subset of basic types as arguments or return values, see [Main.mo](./src/motoko/Main.mo) for details
 - the expected layout of the distributed components (cf. [mops/component/](./mops/component/))
   is somewhat weird (and should be changed), due to various conventions wrt. underscore- and hyphen-characters,
   see comments in [build_rust.sh](./scripts/build_rust.sh) for more info
