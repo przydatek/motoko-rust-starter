@@ -14,6 +14,8 @@ module meet_and_greet {
     public func prim_i32(a : Int32) : Int32 = ((prim "component:meet-and-greet:prim-i32") : Int32 -> Int32)(a);
     public func prim_i64(a : Int64) : Int64 = ((prim "component:meet-and-greet:prim-i64") : Int64 -> Int64)(a);
     public func prim_f64(a : Float) : Float = ((prim "component:meet-and-greet:prim-f64") : Float -> Float)(a);
+    public func prim_text_in(a : Text) : Int32 = ((prim "component:meet-and-greet:prim-string-in") : Text -> Int32)(a);
+    public func prim_text_out() : Text = ((prim "component:meet-and-greet:prim-string-out") : () -> Text)();
     public func prim_text(a : Text) : Text = ((prim "component:meet-and-greet:prim-string") : Text -> Text)(a);
 
     public func vec_u16(a : [Nat16]) : Text = ((prim "component:meet-and-greet:vec-u16") : [Nat16] -> Text)(a);
@@ -26,4 +28,16 @@ module meet_and_greet {
     public func vec_text_nested(a : [[Text]]) : Text = ((prim "component:meet-and-greet:vec-string-nested") : [[Text]] -> Text)(a);
     public func vec_char(a : [Char]) : Text = ((prim "component:meet-and-greet:vec-char") : [Char] -> Text)(a);
     public func vec_f64(a : [Float]) : Text = ((prim "component:meet-and-greet:vec-f64") : [Float] -> Text)(a);
+
+    public func to_vec_bool(i : Int32, b : Bool) : [Bool] = ((prim "component:meet-and-greet:to-vec-bool") : (Int32, Bool) -> [Bool])(i, b);
+    public func to_vec_char(u : Nat8, c : Char) : [Char] = ((prim "component:meet-and-greet:to-vec-char") : (Nat8, Char) -> [Char])(u, c);
+    public func to_vec_u8(u : Nat16, c : Char) : [Nat8] = ((prim "component:meet-and-greet:to-vec-u8") : (Nat16, Char) -> [Nat8])(u, c);
+    public func to_vec_i16(u : Nat16, i : Int16) : [Int16] = ((prim "component:meet-and-greet:to-vec-i16") : (Nat16, Int16) -> [Int16])(u, i);
+    public func to_vec_u32(u : Nat16, i : Nat32) : [Nat32] = ((prim "component:meet-and-greet:to-vec-u32") : (Nat16, Nat32) -> [Nat32])(u, i);
+    public func to_vec_i64(u : Nat16, i : Int64) : [Int64] = ((prim "component:meet-and-greet:to-vec-i64") : (Nat16, Int64) -> [Int64])(u, i);
+    public func to_vec_f64(u : Nat16, f : Float) : [Float] = ((prim "component:meet-and-greet:to-vec-f64") : (Nat16, Float) -> [Float])(u, f);
+    public func to_vec_string(s1 : Text, s2 : Text) : [Text] = ((prim "component:meet-and-greet:to-vec-string") : (Text, Text) -> [Text])(s1, s2);
+    public func to_vec_vec_simple() : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec-simple") : () -> [[Nat64]])();
+    public func to_vec_vec_u64(u : Nat64) : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec-u64") : Nat64 -> [[Nat64]])(u);
+    public func to_vec_vec(vec : [Nat64]) : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec") : [Nat64] -> [[Nat64]])(vec);
 };

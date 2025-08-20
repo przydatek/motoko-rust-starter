@@ -61,6 +61,12 @@ impl Guest for MeetAndGreet {
     fn prim_f64(a: f64) -> f64 {
         a
     }
+    fn prim_string_in(a: String) -> i32 {
+        a.len() as i32
+    }
+    fn prim_string_out() -> String {
+        "Hello; emoji: ☃❄🌨; FooBär☃!".to_string()
+    }
     fn prim_string(a: String) -> String {
         a + "!"
     }
@@ -148,5 +154,74 @@ impl Guest for MeetAndGreet {
                 .collect::<Vec<String>>()
                 .join(", ")
         )
+    }
+
+    fn to_vec_bool(i: i32, b: bool) -> Vec<bool> {
+        let mut v = Vec::new();
+        v.push(i > 0);
+        v.push(!b);
+        v.push(true);
+        v.push(false);
+        v
+    }
+    fn to_vec_char(u: u8, c: char) -> Vec<char> {
+        let mut v = Vec::new();
+        v.push((u / 2u8) as char);
+        v.push(c);
+        v
+    }
+    fn to_vec_u8(u: u16, c: char) -> Vec<u8> {
+        let mut v = Vec::new();
+        v.push((u / 2u16) as u8);
+        v.push(c as u8);
+        v
+    }
+    fn to_vec_i16(u: u16, i: i16) -> Vec<i16> {
+        let mut v = Vec::new();
+        v.push((u / 2u16) as i16);
+        v.push(i / 2);
+        v
+    }
+    fn to_vec_u32(u: u16, i: u32) -> Vec<u32> {
+        let mut v = Vec::new();
+        v.push((u / 2u16) as u32);
+        v.push(i / 2);
+        v
+    }
+    fn to_vec_i64(u: u16, i: i64) -> Vec<i64> {
+        let mut v = Vec::new();
+        v.push((u / 2u16) as i64);
+        v.push(i / 2);
+        v
+    }
+    fn to_vec_f64(u: u16, f: f64) -> Vec<f64> {
+        let mut v = Vec::new();
+        v.push((u / 2u16) as f64);
+        v.push(f / 2.0);
+        v
+    }
+    fn to_vec_string(s1: String, s2: String) -> Vec<String> {
+        let mut v = Vec::new();
+        v.push(s1 + "!");
+        v.push(s2 + "!");
+        v
+    }
+    fn to_vec_vec_simple() -> Vec<Vec<u64>> {
+        let mut v = Vec::new();
+        v.push(vec![0, 0]);
+        v.push(vec![1, 1]);
+        v
+    }
+    fn to_vec_vec_u64(u: u64) -> Vec<Vec<u64>> {
+        let mut v = Vec::new();
+        v.push(vec![u, u]);
+        v.push(vec![u + 1, u + 1]);
+        v
+    }
+    fn to_vec_vec(vec: Vec<u64>) -> Vec<Vec<u64>> {
+        let mut v = Vec::new();
+        v.push(vec.clone());
+        v.push(vec.iter().map(|x| x + 1).collect());
+        v
     }
 }
