@@ -5,6 +5,7 @@ wit_bindgen::generate!({
 
 use candid::{CandidType, Decode, Deserialize};
 use ic_signature_verification::verify_canister_sig;
+use ic_verify_bls_signature::verify_bls_signature;
 
 struct IcSigVerifier;
 export!(IcSigVerifier);
@@ -16,7 +17,7 @@ struct CanisterSigVerifierArgs {
     public_key_der: Vec<u8>,
 }
 impl Guest for IcSigVerifier {
-    fn verify_canister_sig(args_serialized: Vec<u8>) -> Vec<u8> {
+    fn verify_canister_sig_mainnet(args_serialized: Vec<u8>) -> Vec<u8> {
         let args = match Decode!(&args_serialized, CanisterSigVerifierArgs) {
             Ok(args) => args,
             Err(_) => {
@@ -38,35 +39,35 @@ impl Guest for IcSigVerifier {
         }
     }
 
-    fn verify_bls_sig(args_serialized: Vec<u8>) -> Vec<u8> {
-        let _args = match Decode!(&args_serialized, CanisterSigVerifierArgs) {
-            Ok(args) => args,
+    // The signature must be exactly 48 bytes (compressed G1 element) 
+    // The key must be exactly 96 bytes (compressed G2 element)
+    fn verify_bls_sig(signature: Vec<u8>, message: Vec<u8>, public_key: Vec<u8>) -> bool {
+        match verify_bls_signature(&signature, &message, &public_key) {
+            Ok(_) => true,
             Err(_) => {
-                return "failed parsing arguments of verify_bls_sig"
-                    .as_bytes()
-                    .to_vec()
+                println!("BLS signature verification failed");
+                false
             }
-        };
-        return "BLS signature verification is not implemented yet"
-            .as_bytes()
-            .to_vec();
+        }
     }
 
-    fn verify_canister_sig_direct(
-        message: Vec<u8>,
+    fn verify_canister_sig(
         signature_cbor: Vec<u8>,
+        message: Vec<u8>,
         public_key_der: Vec<u8>,
-    ) -> Vec<u8> {
+        ic_root_public_key_raw: Vec<u8>,
+    ) -> bool {
         match verify_canister_sig(
             &message,
             &signature_cbor,
             &public_key_der,
-            &ic_canister_sig_creation::IC_ROOT_PUBLIC_KEY,
+            &ic_root_public_key_raw,
         ) {
-            Ok(_) => "verification succeeded".as_bytes().to_vec(),
-            Err(err_msg) => format!("verification failed: {}", err_msg)
-                .as_bytes()
-                .to_vec(),
+            Ok(_) => true,
+            Err(err_msg) => {
+                println!("canister signature verification failed: {}", err_msg);
+                false
+            }
         }
     }
 }
