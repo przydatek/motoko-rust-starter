@@ -8,6 +8,7 @@ export!(MeetAndGreet);
 
 use crate::exports::api::Guest;
 use crate::exports::api::V1;
+use crate::exports::api::V2;
 
 impl Guest for MeetAndGreet {
     fn say_hello(guest_name: Vec<u8>) -> Vec<u8> {
@@ -241,6 +242,15 @@ impl Guest for MeetAndGreet {
     fn variant_array_in(v: Vec<V1>) -> String {
         v.iter()
             .map(|x| Self::variant_in11(*x))
+            .collect::<Vec<String>>()
+            .join(", ")
+    }
+    fn variant_array_result_like_in(v: Vec<V2>) -> String {
+        v.iter()
+            .map(|x| match x {
+                V2::Ok(u) => format!("ok({})", u),
+                V2::Err(s) => format!("err({})", s),
+            })
             .collect::<Vec<String>>()
             .join(", ")
     }

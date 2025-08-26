@@ -46,8 +46,13 @@ module meet_and_greet {
         #def;
         #gh;
     };
+    type V2 = {
+        #ok : Nat16;
+        #err : Text;
+    };
 
     public func variant_in11(v : V1) : Text = ((prim "component:meet-and-greet:variant-in11") : V1 -> Text)(v);
     public func variant_in12(v1 : V1, v2 : V1) : Text = ((prim "component:meet-and-greet:variant-in12") : (V1, V1) -> Text)(v1, v2);
     public func variant_array_in(v : [V1]) : Text = ((prim "component:meet-and-greet:variant-array-in") : [V1] -> Text)(v);
+    public func variant_array_result_like_in(v : [V2]) : Text = ((prim "component:meet-and-greet:variant-array-result-like-in") : [V2] -> Text)(v);
 };
