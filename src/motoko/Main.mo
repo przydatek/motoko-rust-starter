@@ -107,6 +107,6 @@ do {
     test("To Vec Vec U64", debug_show meet_and_greet.to_vec_vec_u64(1), "[[1, 1], [2, 2]]");
     test("To Vec Vec", debug_show meet_and_greet.to_vec_vec([1, 2, 3]), "[[1, 2, 3], [2, 3, 4]]");
 
-    // test("Variant In", debug_show meet_and_greet.variant_in11(v1(1)), "#def");
-    // test("Variant In", debug_show meet_and_greet.variant_in12(v1(0), v1(2)), "#abc, #gh");
+    test("Variant In", meet_and_greet.variant_in11(v1(1)), "#def");
+    test("Variant In", meet_and_greet.variant_in12(v1(0), v1(2)), "#abc, #gh");
 };
