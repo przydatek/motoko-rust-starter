@@ -6,6 +6,9 @@ wit_bindgen::generate!({
 struct MeetAndGreet;
 export!(MeetAndGreet);
 
+use crate::exports::api::Guest;
+use crate::exports::api::V1;
+
 impl Guest for MeetAndGreet {
     fn say_hello(guest_name: Vec<u8>) -> Vec<u8> {
         format!("hello {}!", String::from_utf8_lossy(&guest_name)).into()
@@ -223,5 +226,26 @@ impl Guest for MeetAndGreet {
         v.push(vec.clone());
         v.push(vec.iter().map(|x| x + 1).collect());
         v
+    }
+
+    fn variant_in11(v: V1) -> String {
+        match v {
+            V1::Abc => "#abc".to_string(),
+            V1::Def => "#def".to_string(),
+            V1::Gh => "#gh".to_string(),
+        }
+    }
+    fn variant_in12(v1: V1, v2: V1) -> String {
+        match (v1, v2) {
+            (V1::Abc, V1::Def) => "#abc, #def".to_string(),
+            (V1::Abc, V1::Gh) => "#abc, #gh".to_string(),
+            (V1::Abc, V1::Abc) => "#abc, #abc".to_string(),
+            (V1::Def, V1::Abc) => "#def, #abc".to_string(),
+            (V1::Def, V1::Gh) => "#def, #gh".to_string(),
+            (V1::Def, V1::Def) => "#def, #def".to_string(),
+            (V1::Gh, V1::Abc) => "#gh, #abc".to_string(),
+            (V1::Gh, V1::Def) => "#gh, #def".to_string(),
+            (V1::Gh, V1::Gh) => "#gh, #gh".to_string(),
+        }
     }
 }

@@ -40,4 +40,13 @@ module meet_and_greet {
     public func to_vec_vec_simple() : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec-simple") : () -> [[Nat64]])();
     public func to_vec_vec_u64(u : Nat64) : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec-u64") : Nat64 -> [[Nat64]])(u);
     public func to_vec_vec(vec : [Nat64]) : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec") : [Nat64] -> [[Nat64]])(vec);
+
+    type V1 = {
+        #abc;
+        #def;
+        #gh;
+    };
+
+    public func variant_in11(v : V1) : Text = ((prim "component:meet-and-greet:variant-in11") : V1 -> Text)(v);
+    public func variant_in12(v1 : V1, v2 : V1) : Text = ((prim "component:meet-and-greet:variant-in12") : (V1, V1) -> Text)(v1, v2);
 };
