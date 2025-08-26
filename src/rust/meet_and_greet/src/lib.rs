@@ -236,16 +236,12 @@ impl Guest for MeetAndGreet {
         }
     }
     fn variant_in12(v1: V1, v2: V1) -> String {
-        match (v1, v2) {
-            (V1::Abc, V1::Def) => "#abc, #def".to_string(),
-            (V1::Abc, V1::Gh) => "#abc, #gh".to_string(),
-            (V1::Abc, V1::Abc) => "#abc, #abc".to_string(),
-            (V1::Def, V1::Abc) => "#def, #abc".to_string(),
-            (V1::Def, V1::Gh) => "#def, #gh".to_string(),
-            (V1::Def, V1::Def) => "#def, #def".to_string(),
-            (V1::Gh, V1::Abc) => "#gh, #abc".to_string(),
-            (V1::Gh, V1::Def) => "#gh, #def".to_string(),
-            (V1::Gh, V1::Gh) => "#gh, #gh".to_string(),
-        }
+        format!("{}, {}", Self::variant_in11(v1), Self::variant_in11(v2))
+    }
+    fn variant_array_in(v: Vec<V1>) -> String {
+        v.iter()
+            .map(|x| Self::variant_in11(*x))
+            .collect::<Vec<String>>()
+            .join(", ")
     }
 }

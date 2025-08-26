@@ -109,4 +109,5 @@ do {
 
     test("Variant In", meet_and_greet.variant_in11(v1(1)), "#def");
     test("Variant In", meet_and_greet.variant_in12(v1(0), v1(2)), "#abc, #gh");
+    test("Variant Array In", meet_and_greet.variant_array_in([v1(0), v1(1), v1(2)]), "#abc, #def, #gh");
 };
