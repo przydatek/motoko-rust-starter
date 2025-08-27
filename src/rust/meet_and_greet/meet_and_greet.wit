@@ -4,6 +4,7 @@ world meet-and-greet {
   export api: interface {
     // Variants must have such names, their order is important and fields must be lexically sorted
     variant v1 { abc, def, gh }
+    variant v2 { c(string) }
 
     say-hello: func(guest-name: list<u8>) -> list<u8>;
     say-goodbye: func(guest-name: list<u8>) -> list<u8>;
@@ -51,7 +52,10 @@ world meet-and-greet {
     variant-in11: func(v: v1) -> string;
     variant-in12: func(v1: v1, v2: v1) -> string;
     variant-array-in: func(v: list<v1>) -> string;
+    variant-result-same-in: func(v: result<u16, u16>) -> string;
     variant-result-in: func(v: result<u16, string>) -> string;
-    variant-array-result-like-in: func(v: list<result<u16, string>>) -> string;
+    variant-string-in: func(v: v2) -> string;
+    variant-array-result-same-in: func(v: list<result<u16, u16>>) -> string;
+    variant-array-result-in: func(v: list<result<u16, string>>) -> string;
   }
 }

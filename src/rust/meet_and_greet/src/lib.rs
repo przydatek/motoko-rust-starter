@@ -8,6 +8,7 @@ export!(MeetAndGreet);
 
 use crate::exports::api::Guest;
 use crate::exports::api::V1;
+use crate::exports::api::V2;
 // Alternative experimental API version
 // use crate::exports::component::meet_and_greet::api::Guest;
 // use crate::exports::component::meet_and_greet::api::V1;
@@ -248,13 +249,33 @@ impl Guest for MeetAndGreet {
             .collect::<Vec<String>>()
             .join(", ")
     }
+    fn variant_result_same_in(v: Result<u16, u16>) -> String {
+        match v {
+            Result::Ok(u) => format!("ok({})", u),
+            Result::Err(u) => format!("err({})", u),
+        }
+    }
     fn variant_result_in(v: Result<u16, String>) -> String {
         match v {
             Result::Ok(u) => format!("ok({})", u),
             Result::Err(s) => format!("err({})", s),
         }
     }
-    fn variant_array_result_like_in(v: Vec<Result<u16, String>>) -> String {
+    fn variant_string_in(v: V2) -> String {
+        match v {
+            V2::C(s) => format!("c({})", s),
+        }
+    }
+    fn variant_array_result_same_in(v: Vec<Result<u16, u16>>) -> String {
+        v.iter()
+            .map(|x| match x {
+                Result::Ok(u) => format!("ok({})", u),
+                Result::Err(u) => format!("err({})", u),
+            })
+            .collect::<Vec<String>>()
+            .join(", ")
+    }
+    fn variant_array_result_in(v: Vec<Result<u16, String>>) -> String {
         v.iter()
             .map(|x| match x {
                 Result::Ok(u) => format!("ok({})", u),

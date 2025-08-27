@@ -110,7 +110,11 @@ do {
     test("Variant In", meet_and_greet.variant_in11(v1(1)), "#def");
     test("Variant In", meet_and_greet.variant_in12(v1(0), v1(2)), "#abc, #gh");
     test("Variant Array In", meet_and_greet.variant_array_in([v1(0), v1(1), v1(2)]), "#abc, #def, #gh");
+    test("Variant Result Same In", meet_and_greet.variant_result_same_in(#ok(1)), "ok(1)");
+    test("Variant Result Same In", meet_and_greet.variant_result_same_in(#err(2)), "err(2)");
+    test("Variant String In", meet_and_greet.variant_string_in(#c("Hello")), "c(Hello)");
     // test("Variant Result In", meet_and_greet.variant_result_in(#ok(1)), "ok(1)");
     // test("Variant Result In", meet_and_greet.variant_result_in(#err("error")), "err(\"error\")");
-    // test("Variant Array Result Like In", meet_and_greet.variant_array_result_like_in([#ok(1), #err("error")]), "ok(1), err(\"error\")");
+    test("Variant Array Result Same In", meet_and_greet.variant_array_result_same_in([#ok(1), #err(2)]), "ok(1), err(2)");
+    test("Variant Array Result In", meet_and_greet.variant_array_result_in([#ok(1), #err("error")]), "ok(1), err(\"error\")");
 };
