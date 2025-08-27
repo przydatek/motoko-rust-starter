@@ -51,6 +51,7 @@ world meet-and-greet {
     variant-in11: func(v: v1) -> string;
     variant-in12: func(v1: v1, v2: v1) -> string;
     variant-array-in: func(v: list<v1>) -> string;
+    variant-result-in: func(v: result<u16, string>) -> string;
     variant-array-result-like-in: func(v: list<result<u16, string>>) -> string;
   }
 }

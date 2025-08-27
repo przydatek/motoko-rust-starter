@@ -248,6 +248,12 @@ impl Guest for MeetAndGreet {
             .collect::<Vec<String>>()
             .join(", ")
     }
+    fn variant_result_in(v: Result<u16, String>) -> String {
+        match v {
+            Result::Ok(u) => format!("ok({})", u),
+            Result::Err(s) => format!("err({})", s),
+        }
+    }
     fn variant_array_result_like_in(v: Vec<Result<u16, String>>) -> String {
         v.iter()
             .map(|x| match x {
