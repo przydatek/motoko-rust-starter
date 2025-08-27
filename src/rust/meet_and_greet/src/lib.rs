@@ -9,6 +9,10 @@ export!(MeetAndGreet);
 use crate::exports::api::Guest;
 use crate::exports::api::V1;
 use crate::exports::api::V2;
+// Alternative experimental API version
+// use crate::exports::component::meet_and_greet::api::Guest;
+// use crate::exports::component::meet_and_greet::api::V1;
+// use crate::exports::component::meet_and_greet::api::V2;
 
 impl Guest for MeetAndGreet {
     fn say_hello(guest_name: Vec<u8>) -> Vec<u8> {
