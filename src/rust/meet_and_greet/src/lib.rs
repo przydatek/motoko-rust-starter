@@ -7,14 +7,20 @@ struct MeetAndGreet;
 export!(MeetAndGreet);
 
 impl Guest for MeetAndGreet {
-    fn say_hello(guest_name: Vec<u8>) -> Vec<u8> {
-        format!("hello {}!", String::from_utf8_lossy(&guest_name)).into()
+    // Basic greeting functionality.
+    fn say_hello(guest_name: String) -> String {
+        format!("Hello {}!", guest_name)
     }
 
-    fn say_goodbye(guest_name: Vec<u8>) -> Vec<u8> {
-        format!("goodbye {}!", String::from_utf8_lossy(&guest_name)).into()
+    fn say_bye(guest_name: String, formal: bool) -> String {
+        if formal {
+            format!("Goodbye {}!", guest_name)
+        } else {
+            format!("Bye {}!", guest_name)
+        }
     }
 
+    // Various primitive types in arguments and return values.
     fn concat0() -> Vec<u8> {
         "concat0".into()
     }
@@ -27,7 +33,6 @@ impl Guest for MeetAndGreet {
         .into()
     }
 
-    // Primitives in arguments
     fn prim_bool(a: bool) -> bool {
         a
     }
