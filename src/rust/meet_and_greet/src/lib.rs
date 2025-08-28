@@ -325,4 +325,19 @@ impl Guest for MeetAndGreet {
     fn variant_array_result(v: Vec<Result<u16, String>>) -> Vec<Result<u16, String>> {
         v.into_iter().map(Self::variant_result).collect()
     }
+
+    fn nested_variant1(v: Result<Result<V2, String>, V1>) -> Result<Result<V2, String>, V1> {
+        match v {
+            Result::Ok(Result::Ok(v)) => Result::Ok(Result::Ok(Self::variant_string(v))),
+            Result::Ok(Result::Err(s)) => Result::Ok(Result::Err(format!("{}!", s))),
+            Result::Err(v) => Result::Err(Self::variant11(v)),
+        }
+    }
+    fn nested_variant2(v: Result<Result<V1, String>, V2>) -> Result<Result<V1, String>, V2> {
+        match v {
+            Result::Ok(Result::Ok(v)) => Result::Ok(Result::Ok(Self::variant11(v))),
+            Result::Ok(Result::Err(s)) => Result::Ok(Result::Err(format!("{}!", s))),
+            Result::Err(v) => Result::Err(Self::variant_string(v)),
+        }
+    }
 }

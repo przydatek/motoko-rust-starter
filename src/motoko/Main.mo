@@ -130,6 +130,14 @@ do {
     test("Variant String", debug_show meet_and_greet.variant_string(#c("hello")), "#c(\"hello!\")");
     test("Variant Array Result Same", debug_show meet_and_greet.variant_array_result_same([#ok(1), #err(2)]), "[#ok(2), #err(3)]");
     test("Variant Array Result", debug_show meet_and_greet.variant_array_result([#ok(1), #err("error")]), "[#ok(2), #err(\"error!\")]");
+
+    test("Nested Variant 1 1", debug_show meet_and_greet.nested_variant1(#ok(#ok(#c("hello")))), "#ok(#ok(#c(\"hello!\")))");
+    test("Nested Variant 1 2", debug_show meet_and_greet.nested_variant1(#ok(#err("error"))), "#ok(#err(\"error!\"))");
+    test("Nested Variant 1 3", debug_show meet_and_greet.nested_variant1(#err(#abc)), "#err(#def)");
+
+    test("Nested Variant 2 1", debug_show meet_and_greet.nested_variant2(#ok(#ok(#abc))), "#ok(#ok(#def))");
+    test("Nested Variant 2 2", debug_show meet_and_greet.nested_variant2(#ok(#err("error"))), "#ok(#err(\"error!\"))");
+    test("Nested Variant 2 3", debug_show meet_and_greet.nested_variant2(#err(#c("hello"))), "#err(#c(\"hello!\"))");
 };
 
 if (failed > 0) {

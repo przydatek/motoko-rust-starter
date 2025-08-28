@@ -67,5 +67,8 @@ world meet-and-greet {
     variant-string: func(v: v2) -> v2;
     variant-array-result-same: func(v: list<result<u16, u16>>) -> list<result<u16, u16>>;
     variant-array-result: func(v: list<result<u16, string>>) -> list<result<u16, string>>;
+
+    nested-variant1: func(v: result<result<v2, string>, v1>) -> result<result<v2, string>, v1>;
+    nested-variant2: func(v: result<result<v1, string>, v2>) -> result<result<v1, string>, v2>;
   }
 }

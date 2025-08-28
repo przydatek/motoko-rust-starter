@@ -71,4 +71,7 @@ module meet_and_greet {
     public func variant_string(v : V2) : V2 = ((prim "component:meet-and-greet:variant-string") : V2 -> V2)(v);
     public func variant_array_result_same(v : [Result<Nat16, Nat16>]) : [Result<Nat16, Nat16>] = ((prim "component:meet-and-greet:variant-array-result-same") : [Result<Nat16, Nat16>] -> [Result<Nat16, Nat16>])(v);
     public func variant_array_result(v : [Result<Nat16, Text>]) : [Result<Nat16, Text>] = ((prim "component:meet-and-greet:variant-array-result") : [Result<Nat16, Text>] -> [Result<Nat16, Text>])(v);
+
+    public func nested_variant1(v : Result<Result<V2, Text>, V1>) : Result<Result<V2, Text>, V1> = ((prim "component:meet-and-greet:nested-variant1") : Result<Result<V2, Text>, V1> -> Result<Result<V2, Text>, V1>)(v);
+    public func nested_variant2(v : Result<Result<V1, Text>, V2>) : Result<Result<V1, Text>, V2> = ((prim "component:meet-and-greet:nested-variant2") : Result<Result<V1, Text>, V2> -> Result<Result<V1, Text>, V2>)(v);
 };
