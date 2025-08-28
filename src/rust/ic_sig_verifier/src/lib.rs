@@ -10,6 +10,8 @@ use ic_verify_bls_signature::verify_bls_signature;
 struct IcSigVerifier;
 export!(IcSigVerifier);
 
+use crate::exports::api::Guest;
+
 #[derive(CandidType, Deserialize)]
 struct CanisterSigVerifierArgs {
     message: Vec<u8>,
@@ -39,7 +41,7 @@ impl Guest for IcSigVerifier {
         }
     }
 
-    // The signature must be exactly 48 bytes (compressed G1 element) 
+    // The signature must be exactly 48 bytes (compressed G1 element)
     // The key must be exactly 96 bytes (compressed G2 element)
     fn verify_bls_sig(signature: Vec<u8>, message: Vec<u8>, public_key: Vec<u8>) -> bool {
         match verify_bls_signature(&signature, &message, &public_key) {
