@@ -9,6 +9,8 @@ import meet_and_greet "../../mops/component/meet_and_greet";
 
 import Blob "mo:core/Blob";
 
+var failed = 0;
+
 func testBlobText(msg : Text, actual : Blob, expected : Text) {
     let ?actualText = decodeUtf8(actual) else trap("Failed to decode blob to text");
     test(msg, actualText, expected);
@@ -17,6 +19,7 @@ func test(msg : Text, actual : Text, expected : Text) {
     if (actual == expected) {
         debugPrint("✅ " # msg # " " # actual);
     } else {
+        failed += 1;
         debugPrint("❌ " # msg);
         debugPrint("Expected: " # expected);
         debugPrint("Actual  : " # actual);
@@ -117,4 +120,10 @@ do {
     test("Variant Result In", meet_and_greet.variant_result_in(#err("error")), "err(error)");
     test("Variant Array Result Same In", meet_and_greet.variant_array_result_same_in([#ok(1), #err(2)]), "ok(1), err(2)");
     test("Variant Array Result In", meet_and_greet.variant_array_result_in([#ok(1), #err("error")]), "ok(1), err(error)");
+};
+
+if (failed > 0) {
+    debugPrint("❌ Failed: " # debug_show (failed));
+} else {
+    debugPrint("✅ All tests passed!");
 };
