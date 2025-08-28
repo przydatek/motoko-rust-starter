@@ -3,6 +3,7 @@ package component:meet-and-greet;
 world meet-and-greet {
   export api: interface {
     // Variants must have such names, their order is important and fields must be lexically sorted
+    // TODO: we need to figure out a way to get the order of fields so that they are correctly encoded by the compiler, for now we rely that they are sorted by their names
     variant v1 { abc, def, gh }
     variant v2 { c(string) }
 
