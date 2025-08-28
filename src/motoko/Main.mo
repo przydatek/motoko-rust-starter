@@ -120,6 +120,16 @@ do {
     test("Variant Result In", meet_and_greet.variant_result_in(#err("error")), "err(error)");
     test("Variant Array Result Same In", meet_and_greet.variant_array_result_same_in([#ok(1), #err(2)]), "ok(1), err(2)");
     test("Variant Array Result In", meet_and_greet.variant_array_result_in([#ok(1), #err("error")]), "ok(1), err(error)");
+
+    // test("Variant 11", debug_show meet_and_greet.variant11(#abc), "#def");
+    // test("Variant 12", debug_show meet_and_greet.variant12(#abc, #def), "#gh");
+    // test("Variant Array", debug_show meet_and_greet.variant_array([#abc, #def, #gh]), "[#def, #gh, #abc]");
+    // test("Variant Result Same", debug_show meet_and_greet.variant_result_same(#ok(1)), "#ok(2)");
+    // test("Variant Result", debug_show meet_and_greet.variant_result(#ok(1)), "#ok(2)");
+    // test("Variant Result", debug_show meet_and_greet.variant_result(#err("error")), "#err(error!)");
+    // test("Variant String", debug_show meet_and_greet.variant_string(#c("hello")), "#c(hello!)");
+    // test("Variant Array Result Same", debug_show meet_and_greet.variant_array_result_same([#ok(1), #err(2)]), "[#ok(2), #err(3)]");
+    // test("Variant Array Result", debug_show meet_and_greet.variant_array_result([#ok(1), #err("error")]), "[#ok(2), #err(error!)]");
 };
 
 if (failed > 0) {

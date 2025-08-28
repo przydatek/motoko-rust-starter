@@ -284,4 +284,45 @@ impl Guest for MeetAndGreet {
             .collect::<Vec<String>>()
             .join(", ")
     }
+
+    fn variant11(v: V1) -> V1 {
+        match v {
+            V1::Abc => V1::Def,
+            V1::Def => V1::Gh,
+            V1::Gh => V1::Abc,
+        }
+    }
+    fn variant12(v1: V1, v2: V1) -> V1 {
+        match v1 {
+            V1::Abc => Self::variant11(v2),
+            V1::Def => Self::variant11(Self::variant11(v2)),
+            V1::Gh => Self::variant11(Self::variant11(Self::variant11(v2))),
+        }
+    }
+    fn variant_array(v: Vec<V1>) -> Vec<V1> {
+        v.into_iter().map(Self::variant11).collect()
+    }
+    fn variant_result_same(v: Result<u16, u16>) -> Result<u16, u16> {
+        match v {
+            Result::Ok(u) => Result::Ok(u + 1),
+            Result::Err(u) => Result::Err(u + 1),
+        }
+    }
+    fn variant_result(v: Result<u16, String>) -> Result<u16, String> {
+        match v {
+            Result::Ok(u) => Result::Ok(u + 1),
+            Result::Err(s) => Result::Err(format!("{}!", s)),
+        }
+    }
+    fn variant_string(v: V2) -> V2 {
+        match v {
+            V2::C(s) => V2::C(format!("{}!", s)),
+        }
+    }
+    fn variant_array_result_same(v: Vec<Result<u16, u16>>) -> Vec<Result<u16, u16>> {
+        v.into_iter().map(Self::variant_result_same).collect()
+    }
+    fn variant_array_result(v: Vec<Result<u16, String>>) -> Vec<Result<u16, String>> {
+        v.into_iter().map(Self::variant_result).collect()
+    }
 }

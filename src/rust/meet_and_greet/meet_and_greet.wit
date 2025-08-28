@@ -57,5 +57,14 @@ world meet-and-greet {
     variant-string-in: func(v: v2) -> string;
     variant-array-result-same-in: func(v: list<result<u16, u16>>) -> string;
     variant-array-result-in: func(v: list<result<u16, string>>) -> string;
+
+    variant11: func(v: v1) -> v1;
+    variant12: func(v1: v1, v2: v1) -> v1;
+    variant-array: func(v: list<v1>) -> list<v1>;
+    variant-result-same: func(v: result<u16, u16>) -> result<u16, u16>;
+    variant-result: func(v: result<u16, string>) -> result<u16, string>;
+    variant-string: func(v: v2) -> v2;
+    variant-array-result-same: func(v: list<result<u16, u16>>) -> list<result<u16, u16>>;
+    variant-array-result: func(v: list<result<u16, string>>) -> list<result<u16, string>>;
   }
 }

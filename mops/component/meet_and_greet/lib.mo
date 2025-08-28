@@ -62,4 +62,13 @@ module meet_and_greet {
     public func variant_string_in(v : V2) : Text = ((prim "component:meet-and-greet:variant-string-in") : V2 -> Text)(v);
     public func variant_array_result_same_in(v : [Result<Nat16, Nat16>]) : Text = ((prim "component:meet-and-greet:variant-array-result-same-in") : [Result<Nat16, Nat16>] -> Text)(v);
     public func variant_array_result_in(v : [Result<Nat16, Text>]) : Text = ((prim "component:meet-and-greet:variant-array-result-in") : [Result<Nat16, Text>] -> Text)(v);
+
+    public func variant11(v : V1) : V1 = ((prim "component:meet-and-greet:variant11") : V1 -> V1)(v);
+    public func variant12(v1 : V1, v2 : V1) : V1 = ((prim "component:meet-and-greet:variant12") : (V1, V1) -> V1)(v1, v2);
+    public func variant_array(v : [V1]) : [V1] = ((prim "component:meet-and-greet:variant-array") : [V1] -> [V1])(v);
+    public func variant_result_same(v : Result<Nat16, Nat16>) : Result<Nat16, Nat16> = ((prim "component:meet-and-greet:variant-result-same") : Result<Nat16, Nat16> -> Result<Nat16, Nat16>)(v);
+    public func variant_result(v : Result<Nat16, Text>) : Result<Nat16, Text> = ((prim "component:meet-and-greet:variant-result") : Result<Nat16, Text> -> Result<Nat16, Text>)(v);
+    public func variant_string(v : V2) : V2 = ((prim "component:meet-and-greet:variant-string") : V2 -> V2)(v);
+    public func variant_array_result_same(v : [Result<Nat16, Nat16>]) : [Result<Nat16, Nat16>] = ((prim "component:meet-and-greet:variant-array-result-same") : [Result<Nat16, Nat16>] -> [Result<Nat16, Nat16>])(v);
+    public func variant_array_result(v : [Result<Nat16, Text>]) : [Result<Nat16, Text>] = ((prim "component:meet-and-greet:variant-array-result") : [Result<Nat16, Text>] -> [Result<Nat16, Text>])(v);
 };
