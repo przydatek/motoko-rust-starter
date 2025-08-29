@@ -70,5 +70,13 @@ world meet-and-greet {
 
     nested-variant1: func(v: result<result<v2, string>, v1>) -> result<result<v2, string>, v1>;
     nested-variant2: func(v: result<result<v1, string>, v2>) -> result<result<v1, string>, v2>;
+
+    option-string: func(v: option<string>) -> option<string>;
+    options-array: func(v: option<list<option<string>>>) -> option<list<option<string>>>;
+
+    tuple-string-u64: func(v: tuple<string, u64>) -> tuple<string, u64>;
+    tuple-variant-array-result: func(v: tuple<v1, list<string>, result<u16, string>>) -> tuple<v1, list<string>, result<u16, string>>;
+    tuples-nested1: func(v1: tuple<bool, tuple<u8, u16>>, v2: tuple<tuple<u8, u16>, u32>) -> tuple<tuple<bool, u32>, tuple<u8, u32>>;
+    tuples-nested: func(v1: tuple<bool, tuple<u8, u16>>, v2: tuple<tuple<u8, u16>, u64>) -> tuple<tuple<bool, u32>, tuple<u8, u64>>;
   }
 }

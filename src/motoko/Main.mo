@@ -138,6 +138,14 @@ do {
     test("Nested Variant 2 1", debug_show meet_and_greet.nested_variant2(#ok(#ok(#abc))), "#ok(#ok(#def))");
     test("Nested Variant 2 2", debug_show meet_and_greet.nested_variant2(#ok(#err("error"))), "#ok(#err(\"error!\"))");
     test("Nested Variant 2 3", debug_show meet_and_greet.nested_variant2(#err(#c("hello"))), "#err(#c(\"hello!\"))");
+
+    // test("Option String", debug_show meet_and_greet.option_string(?("hello")), "?(\"hello!\")");
+    // test("Options Array", debug_show meet_and_greet.options_array(?([?("hello"), null, ?("world")])), "?([?(\"hello!\"), null, ?(\"world!\")])");
+
+    test("Tuple String U64", debug_show meet_and_greet.tuple_string_u64("hello", 1), "(\"hello!\", 2)");
+    // test("Tuple Variant Array Result", debug_show meet_and_greet.tuple_variant_array_result((#abc, ["hello", "world"], #ok(1))), "(#def, [\"hello!\", \"world!\"], #ok(2))");
+    // test("Tuples Nested1", debug_show meet_and_greet.tuples_nested1((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
+    // test("Tuples Nested", debug_show meet_and_greet.tuples_nested((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
 };
 
 if (failed > 0) {

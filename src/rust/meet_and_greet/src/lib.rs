@@ -340,4 +340,40 @@ impl Guest for MeetAndGreet {
             Result::Err(v) => Result::Err(Self::variant_string(v)),
         }
     }
+
+    fn option_string(v: Option<String>) -> Option<String> {
+        match v {
+            Some(s) => Some(format!("{}!", s)),
+            None => None,
+        }
+    }
+    fn options_array(v: Option<Vec<Option<String>>>) -> Option<Vec<Option<String>>> {
+        match v {
+            Some(v) => Some(
+                v.into_iter()
+                    .map(|x| x.map(|s| format!("{}!", s)))
+                    .collect(),
+            ),
+            None => None,
+        }
+    }
+
+    fn tuple_string_u64(v: (String, u64)) -> (String, u64) {
+        (format!("{}!", v.0), v.1 + 1)
+    }
+    fn tuple_variant_array_result(
+        v: (V1, Vec<String>, Result<u16, String>),
+    ) -> (V1, Vec<String>, Result<u16, String>) {
+        (
+            Self::variant11(v.0),
+            v.1.iter().map(|s| format!("{}!", s)).collect(),
+            Self::variant_result(v.2),
+        )
+    }
+    fn tuples_nested1(v1: (bool, (u8, u16)), v2: ((u8, u16), u32)) -> ((bool, u32), (u8, u32)) {
+        ((!v1.0, v1.1 .1 as u32 + 1), (v2.0 .0 + 1, v2.1 + 1))
+    }
+    fn tuples_nested(v1: (bool, (u8, u16)), v2: ((u8, u16), u64)) -> ((bool, u32), (u8, u64)) {
+        ((!v1.0, v1.1 .1 as u32 + 1), (v2.0 .0 + 1, v2.1 + 1))
+    }
 }
