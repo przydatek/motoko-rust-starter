@@ -40,4 +40,47 @@ module meet_and_greet {
     public func to_vec_vec_simple() : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec-simple") : () -> [[Nat64]])();
     public func to_vec_vec_u64(u : Nat64) : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec-u64") : Nat64 -> [[Nat64]])(u);
     public func to_vec_vec(vec : [Nat64]) : [[Nat64]] = ((prim "component:meet-and-greet:to-vec-vec") : [Nat64] -> [[Nat64]])(vec);
+
+    // Names and order of fields is important!
+    public type V1 = {
+        #def;
+        #abc;
+        #gh;
+    };
+    public type C = {
+        #c : Text;
+    };
+    type Result<T, E> = {
+        #ok : T;
+        #err : E;
+    };
+
+    public func variant_in11(v : V1) : Text = ((prim "component:meet-and-greet:variant-in11") : V1 -> Text)(v);
+    public func variant_in12(v1 : V1, v2 : V1) : Text = ((prim "component:meet-and-greet:variant-in12") : (V1, V1) -> Text)(v1, v2);
+    public func variant_array_in(v : [V1]) : Text = ((prim "component:meet-and-greet:variant-array-in") : [V1] -> Text)(v);
+    public func variant_result_same_in(v : Result<Nat16, Nat16>) : Text = ((prim "component:meet-and-greet:variant-result-same-in") : Result<Nat16, Nat16> -> Text)(v);
+    public func variant_result_in(v : Result<Nat16, Text>) : Text = ((prim "component:meet-and-greet:variant-result-in") : Result<Nat16, Text> -> Text)(v);
+    public func variant_string_in(v : C) : Text = ((prim "component:meet-and-greet:variant-string-in") : C -> Text)(v);
+    public func variant_array_result_same_in(v : [Result<Nat16, Nat16>]) : Text = ((prim "component:meet-and-greet:variant-array-result-same-in") : [Result<Nat16, Nat16>] -> Text)(v);
+    public func variant_array_result_in(v : [Result<Nat16, Text>]) : Text = ((prim "component:meet-and-greet:variant-array-result-in") : [Result<Nat16, Text>] -> Text)(v);
+
+    public func variant11(v : V1) : V1 = ((prim "component:meet-and-greet:variant11") : V1 -> V1)(v);
+    public func variant12(v1 : V1, v2 : V1) : V1 = ((prim "component:meet-and-greet:variant12") : (V1, V1) -> V1)(v1, v2);
+    public func variant_array(v : [V1]) : [V1] = ((prim "component:meet-and-greet:variant-array") : [V1] -> [V1])(v);
+    public func variant_result_same(v : Result<Nat16, Nat16>) : Result<Nat16, Nat16> = ((prim "component:meet-and-greet:variant-result-same") : Result<Nat16, Nat16> -> Result<Nat16, Nat16>)(v);
+    public func variant_result(v : Result<Nat16, Text>) : Result<Nat16, Text> = ((prim "component:meet-and-greet:variant-result") : Result<Nat16, Text> -> Result<Nat16, Text>)(v);
+    public func variant_string(v : C) : C = ((prim "component:meet-and-greet:variant-string") : C -> C)(v);
+    public func variant_array_result_same(v : [Result<Nat16, Nat16>]) : [Result<Nat16, Nat16>] = ((prim "component:meet-and-greet:variant-array-result-same") : [Result<Nat16, Nat16>] -> [Result<Nat16, Nat16>])(v);
+    public func variant_array_result(v : [Result<Nat16, Text>]) : [Result<Nat16, Text>] = ((prim "component:meet-and-greet:variant-array-result") : [Result<Nat16, Text>] -> [Result<Nat16, Text>])(v);
+
+    public func nested_variant1(v : Result<Result<C, Text>, V1>) : Result<Result<C, Text>, V1> = ((prim "component:meet-and-greet:nested-variant1") : Result<Result<C, Text>, V1> -> Result<Result<C, Text>, V1>)(v);
+    public func nested_variant2(v : Result<Result<V1, Text>, C>) : Result<Result<V1, Text>, C> = ((prim "component:meet-and-greet:nested-variant2") : Result<Result<V1, Text>, C> -> Result<Result<V1, Text>, C>)(v);
+
+    // public func option_string(v : ?Text) : ?Text = ((prim "component:meet-and-greet:option-string") : ?Text -> ?Text)(v);
+    // public func options_array(v : ?[?Text]) : ?[?Text] = ((prim "component:meet-and-greet:options-array") : ?[?Text] -> ?[?Text])(v);
+
+    public func tuple_string_u64(v : (Text, Nat64)) : (Text, Nat64) = ((prim "component:meet-and-greet:tuple-string-u64") : (Text, Nat64) -> (Text, Nat64))(v);
+    public func tuple_variant_array_result(v : (V1, [Text], Result<Nat16, Text>)) : (V1, [Text], Result<Nat16, Text>) = ((prim "component:meet-and-greet:tuple-variant-array-result") : (V1, [Text], Result<Nat16, Text>) -> (V1, [Text], Result<Nat16, Text>))(v);
+    public func tuples_nested1(v1 : (Bool, (Nat8, Nat16)), v2 : ((Nat8, Nat16), Nat32)) : ((Bool, Nat32), (Nat8, Nat32)) = ((prim "component:meet-and-greet:tuples-nested1") : ((Bool, (Nat8, Nat16)), ((Nat8, Nat16), Nat32)) -> ((Bool, Nat32), (Nat8, Nat32)))(v1, v2);
+    public func tuples_nested(v1 : (Bool, (Nat8, Nat16)), v2 : ((Nat8, Nat16), Nat64)) : ((Bool, Nat32), (Nat8, Nat64)) = ((prim "component:meet-and-greet:tuples-nested") : ((Bool, (Nat8, Nat16)), ((Nat8, Nat16), Nat64)) -> ((Bool, Nat32), (Nat8, Nat64)))(v1, v2);
 };

@@ -9,12 +9,14 @@ import Text "mo:core/Text";
 import Array "mo:core/Array";
 import Hex "mo:hex";
 
-
 // Import functionality from WASM components.
 import meet_and_greet "../../mops/component/meet_and_greet";
-import ic_sig_verifier "component:ic_sig_verifier";
-import {verifyBlsSig = verifyBlsSignature} "component:ic_sig_verifier";
+import ic_sig_verifier "../../mops/component/ic_sig_verifier";
+import { verifyBlsSig = verifyBlsSignature } "../../mops/component/ic_sig_verifier";
+// import ic_sig_verifier "component:ic_sig_verifier";
+// import { verifyBlsSig = verifyBlsSignature } "component:ic_sig_verifier";
 
+var failed = 0;
 
 func testBlobText(msg : Text, actual : Blob, expected : Text) {
     let ?actualText = decodeUtf8(actual) else trap("Failed to decode blob to text");
@@ -25,18 +27,24 @@ func test(msg : Text, actual : Text, expected : Text) {
     if (actual == expected) {
         debugPrint("✅ " # msg # " " # actual);
     } else {
+        failed += 1;
         debugPrint("❌ " # msg);
         debugPrint("Expected: " # expected);
         debugPrint("Actual  : " # actual);
     };
 };
 
+func v1(n : Nat) : meet_and_greet.V1 = switch (n) {
+    case (0) #abc;
+    case (1) #def;
+    case (_) #gh;
+};
 func shortenText(s : Text) : Text {
-  let chars = Text.toArray(s);
-  let n = chars.size();
-  let first4 = Array.sliceToArray<Char>(chars, 0, if (n < 4) n else 4);
-  let last4 = Array.sliceToArray<Char>(chars, if (n < 4) 0 else n - 4, n);
-  Text.fromArray(Array.flatten([first4, Text.toArray(".."), last4]));
+    let chars = Text.toArray(s);
+    let n = chars.size();
+    let first4 = Array.sliceToArray<Char>(chars, 0, if (n < 4) n else 4);
+    let last4 = Array.sliceToArray<Char>(chars, if (n < 4) 0 else n - 4, n);
+    Text.fromArray(Array.flatten([first4, Text.toArray(".."), last4]));
 };
 
 func testBlsSignature(sig_hex : Text, msg_hex : Text, pk_hex : Text, expected : Bool) {
@@ -57,7 +65,7 @@ func testBlsSignature(sig_hex : Text, msg_hex : Text, pk_hex : Text, expected : 
 
 do {
     debugPrint("\n===== Meet-and-greet basic functionality: ");
-    
+
     test("sayHello: ", meet_and_greet.sayHello("Bob"), "Hello Bob!");
     test("sayBye, informal: ", meet_and_greet.sayBye("Alice", false), "Bye Alice!");
     test("sayBye, formal: ", meet_and_greet.sayBye("Carol", true), "Goodbye Carol!");
@@ -130,13 +138,13 @@ do {
 
 do {
     debugPrint("\n===== Error reported by a component: ");
-    testBlobText("verifyCanisterSigMainnet: ", ic_sig_verifier.verifyCanisterSigMainnet("args, serialized"), "valid");
+    testBlobText("verifyCanisterSigMainnet: ", ic_sig_verifier.verifyCanisterSigMainnet("args, serialized"), "failed parsing arguments of verify_canister_sig");
     let dummyArgs : CanisterSigVerifierArgs = {
         message = Blob.fromArray([1, 2, 3]); // Placeholder for message
         signature_cbor = Blob.fromArray([3, 4, 5]); // Placeholder for signature
         public_key_der = Blob.fromArray([6, 7, 8]); // Placeholder for public key
     };
-    testBlobText("verifyCanisterSigMainnet: ", ic_sig_verifier.verifyCanisterSigMainnet(to_candid(dummyArgs)), "valid");
+    testBlobText("verifyCanisterSigMainnet: ", ic_sig_verifier.verifyCanisterSigMainnet(to_candid (dummyArgs)), "verification failed: signature CBOR doesn't have a self-describing tag");
 };
 
 do {
@@ -181,4 +189,47 @@ do {
     test("To Vec Vec Simple", debug_show meet_and_greet.to_vec_vec_simple(), "[[0, 0], [1, 1]]");
     test("To Vec Vec U64", debug_show meet_and_greet.to_vec_vec_u64(1), "[[1, 1], [2, 2]]");
     test("To Vec Vec", debug_show meet_and_greet.to_vec_vec([1, 2, 3]), "[[1, 2, 3], [2, 3, 4]]");
+
+    test("Variant In", meet_and_greet.variant_in11(v1(1)), "#def");
+    test("Variant In", meet_and_greet.variant_in12(v1(0), v1(2)), "#abc, #gh");
+    test("Variant Array In", meet_and_greet.variant_array_in([v1(0), v1(1), v1(2)]), "#abc, #def, #gh");
+    test("Variant Result Same In", meet_and_greet.variant_result_same_in(#ok(1)), "ok(1)");
+    test("Variant Result Same In", meet_and_greet.variant_result_same_in(#err(2)), "err(2)");
+    test("Variant String In", meet_and_greet.variant_string_in(#c("Hello")), "c(Hello)");
+    test("Variant Result In", meet_and_greet.variant_result_in(#ok(1)), "ok(1)");
+    test("Variant Result In", meet_and_greet.variant_result_in(#err("error")), "err(error)");
+    test("Variant Array Result Same In", meet_and_greet.variant_array_result_same_in([#ok(1), #err(2)]), "ok(1), err(2)");
+    test("Variant Array Result In", meet_and_greet.variant_array_result_in([#ok(1), #err("error")]), "ok(1), err(error)");
+
+    test("Variant 11", debug_show meet_and_greet.variant11(#abc), "#def");
+    test("Variant 12", debug_show meet_and_greet.variant12(#abc, #def), "#gh");
+    test("Variant Array", debug_show meet_and_greet.variant_array([#abc, #def, #gh]), "[#def, #gh, #abc]");
+    test("Variant Result Same", debug_show meet_and_greet.variant_result_same(#ok(1)), "#ok(2)");
+    test("Variant Result", debug_show meet_and_greet.variant_result(#ok(1)), "#ok(2)");
+    test("Variant Result", debug_show meet_and_greet.variant_result(#err("error")), "#err(\"error!\")");
+    test("Variant String", debug_show meet_and_greet.variant_string(#c("hello")), "#c(\"hello!\")");
+    test("Variant Array Result Same", debug_show meet_and_greet.variant_array_result_same([#ok(1), #err(2)]), "[#ok(2), #err(3)]");
+    test("Variant Array Result", debug_show meet_and_greet.variant_array_result([#ok(1), #err("error")]), "[#ok(2), #err(\"error!\")]");
+
+    test("Nested Variant 1 1", debug_show meet_and_greet.nested_variant1(#ok(#ok(#c("hello")))), "#ok(#ok(#c(\"hello!\")))");
+    test("Nested Variant 1 2", debug_show meet_and_greet.nested_variant1(#ok(#err("error"))), "#ok(#err(\"error!\"))");
+    test("Nested Variant 1 3", debug_show meet_and_greet.nested_variant1(#err(#abc)), "#err(#def)");
+
+    test("Nested Variant 2 1", debug_show meet_and_greet.nested_variant2(#ok(#ok(#abc))), "#ok(#ok(#def))");
+    test("Nested Variant 2 2", debug_show meet_and_greet.nested_variant2(#ok(#err("error"))), "#ok(#err(\"error!\"))");
+    test("Nested Variant 2 3", debug_show meet_and_greet.nested_variant2(#err(#c("hello"))), "#err(#c(\"hello!\"))");
+
+    // test("Option String", debug_show meet_and_greet.option_string(?("hello")), "?(\"hello!\")");
+    // test("Options Array", debug_show meet_and_greet.options_array(?([?("hello"), null, ?("world")])), "?([?(\"hello!\"), null, ?(\"world!\")])");
+
+    test("Tuple String U64", debug_show meet_and_greet.tuple_string_u64("hello", 1), "(\"hello!\", 2)");
+    // test("Tuple Variant Array Result", debug_show meet_and_greet.tuple_variant_array_result((#abc, ["hello", "world"], #ok(1))), "(#def, [\"hello!\", \"world!\"], #ok(2))");
+    // test("Tuples Nested1", debug_show meet_and_greet.tuples_nested1((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
+    // test("Tuples Nested", debug_show meet_and_greet.tuples_nested((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
+};
+
+if (failed > 0) {
+    debugPrint("❌ Failed: " # debug_show (failed));
+} else {
+    debugPrint("✅ All tests passed!");
 };
