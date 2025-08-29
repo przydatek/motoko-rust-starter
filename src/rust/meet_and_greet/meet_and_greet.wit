@@ -4,8 +4,8 @@ world meet-and-greet {
   export api: interface {
     // Variants must have such names, their order is important and fields must be lexically sorted
     // TODO: we need to figure out a way to get the order of fields so that they are correctly encoded by the compiler, for now we rely that they are sorted by their names
-    variant v1 { abc, def, gh }
-    variant v2 { c(string) }
+    variant v1 { def, abc, gh }
+    variant c { c(string) }
 
     say-hello: func(guest-name: list<u8>) -> list<u8>;
     say-goodbye: func(guest-name: list<u8>) -> list<u8>;
@@ -55,7 +55,7 @@ world meet-and-greet {
     variant-array-in: func(v: list<v1>) -> string;
     variant-result-same-in: func(v: result<u16, u16>) -> string;
     variant-result-in: func(v: result<u16, string>) -> string;
-    variant-string-in: func(v: v2) -> string;
+    variant-string-in: func(v: c) -> string;
     variant-array-result-same-in: func(v: list<result<u16, u16>>) -> string;
     variant-array-result-in: func(v: list<result<u16, string>>) -> string;
 
@@ -64,12 +64,12 @@ world meet-and-greet {
     variant-array: func(v: list<v1>) -> list<v1>;
     variant-result-same: func(v: result<u16, u16>) -> result<u16, u16>;
     variant-result: func(v: result<u16, string>) -> result<u16, string>;
-    variant-string: func(v: v2) -> v2;
+    variant-string: func(v: c) -> c;
     variant-array-result-same: func(v: list<result<u16, u16>>) -> list<result<u16, u16>>;
     variant-array-result: func(v: list<result<u16, string>>) -> list<result<u16, string>>;
 
-    nested-variant1: func(v: result<result<v2, string>, v1>) -> result<result<v2, string>, v1>;
-    nested-variant2: func(v: result<result<v1, string>, v2>) -> result<result<v1, string>, v2>;
+    nested-variant1: func(v: result<result<c, string>, v1>) -> result<result<c, string>, v1>;
+    nested-variant2: func(v: result<result<v1, string>, c>) -> result<result<v1, string>, c>;
 
     option-string: func(v: option<string>) -> option<string>;
     options-array: func(v: option<list<option<string>>>) -> option<list<option<string>>>;

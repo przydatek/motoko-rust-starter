@@ -26,12 +26,7 @@ func test(msg : Text, actual : Text, expected : Text) {
     };
 };
 
-type V1 = {
-    #abc;
-    #def;
-    #gh;
-};
-func v1(n : Nat) : V1 = switch (n) {
+func v1(n : Nat) : meet_and_greet.V1 = switch (n) {
     case (0) #abc;
     case (1) #def;
     case (_) #gh;

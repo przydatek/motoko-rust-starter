@@ -7,12 +7,12 @@ struct MeetAndGreet;
 export!(MeetAndGreet);
 
 use crate::exports::api::Guest;
+use crate::exports::api::C;
 use crate::exports::api::V1;
-use crate::exports::api::V2;
 // Alternative experimental API version
 // use crate::exports::component::meet_and_greet::api::Guest;
 // use crate::exports::component::meet_and_greet::api::V1;
-// use crate::exports::component::meet_and_greet::api::V2;
+// use crate::exports::component::meet_and_greet::api::C;
 
 impl Guest for MeetAndGreet {
     fn say_hello(guest_name: Vec<u8>) -> Vec<u8> {
@@ -261,9 +261,9 @@ impl Guest for MeetAndGreet {
             Result::Err(s) => format!("err({})", s),
         }
     }
-    fn variant_string_in(v: V2) -> String {
+    fn variant_string_in(v: C) -> String {
         match v {
-            V2::C(s) => format!("c({})", s),
+            C::C(s) => format!("c({})", s),
         }
     }
     fn variant_array_result_same_in(v: Vec<Result<u16, u16>>) -> String {
@@ -314,9 +314,9 @@ impl Guest for MeetAndGreet {
             Result::Err(s) => Result::Err(format!("{}!", s)),
         }
     }
-    fn variant_string(v: V2) -> V2 {
+    fn variant_string(v: C) -> C {
         match v {
-            V2::C(s) => V2::C(format!("{}!", s)),
+            C::C(s) => C::C(format!("{}!", s)),
         }
     }
     fn variant_array_result_same(v: Vec<Result<u16, u16>>) -> Vec<Result<u16, u16>> {
@@ -326,14 +326,14 @@ impl Guest for MeetAndGreet {
         v.into_iter().map(Self::variant_result).collect()
     }
 
-    fn nested_variant1(v: Result<Result<V2, String>, V1>) -> Result<Result<V2, String>, V1> {
+    fn nested_variant1(v: Result<Result<C, String>, V1>) -> Result<Result<C, String>, V1> {
         match v {
             Result::Ok(Result::Ok(v)) => Result::Ok(Result::Ok(Self::variant_string(v))),
             Result::Ok(Result::Err(s)) => Result::Ok(Result::Err(format!("{}!", s))),
             Result::Err(v) => Result::Err(Self::variant11(v)),
         }
     }
-    fn nested_variant2(v: Result<Result<V1, String>, V2>) -> Result<Result<V1, String>, V2> {
+    fn nested_variant2(v: Result<Result<V1, String>, C>) -> Result<Result<V1, String>, C> {
         match v {
             Result::Ok(Result::Ok(v)) => Result::Ok(Result::Ok(Self::variant11(v))),
             Result::Ok(Result::Err(s)) => Result::Ok(Result::Err(format!("{}!", s))),
