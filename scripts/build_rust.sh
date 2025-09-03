@@ -30,10 +30,10 @@ build_rust_component() {
   cd $RUST_DIR/$component_name || exit
   cargo build --$BUILD_MODE --target $TARGET &&
   wasm-tools component new target/$TARGET/$BUILD_MODE/${component_name}.wasm -o target/${component_name}.wasm &&
-  echo ... Copying to mops-dir $COMPONENT_DIR/${component_name}
-  mkdir -pv $COMPONENT_DIR/$component_name
+  echo ... Copying to mops-dir $COMPONENT_DIR/${component_name}@0.0.1
+  mkdir -pv "$COMPONENT_DIR/$component_name@0.0.1"
   cp target/${component_name}.wasm $COMPONENT_DIR/${wac_compatible_component_name}.wasm
-  cp ${component_name}.mo $COMPONENT_DIR/${component_name}/lib.mo
+  cp ${component_name}.mo $COMPONENT_DIR/${component_name}@0.0.1/lib.mo
   echo ... DONE building $component_name
 }
 

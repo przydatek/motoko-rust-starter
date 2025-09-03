@@ -9,7 +9,13 @@ ROOT_DIR=$(dirname "$(realpath $0)")/..
 MO_SRC_DIR="src/motoko"
 MOC_BIN="$ROOT_DIR/../motoko/bin/moc"
 MOC_PACKAGES=$(cd $ROOT_DIR/$MO_SRC_DIR || exit; mops sources | sed "s|.mops|$MO_SRC_DIR/.mops|g")
-MOC_COMPONENT_PACKAGES="--package ic_sig_verifier $ROOT_DIR/mops/component/ic_sig_verifier/"
+MOC_COMPONENT_PACKAGES=""
+for folder in $ROOT_DIR/mops/component/*@*; do
+  package_with_version=$(basename -- "$folder")
+  package="${package_with_version%@*}"
+  echo Component: $package_with_version $package
+  MOC_COMPONENT_PACKAGES="$MOC_COMPONENT_PACKAGES --package $package $ROOT_DIR/mops/component/$package_with_version"
+done
 
 cd $ROOT_DIR || exit
 
