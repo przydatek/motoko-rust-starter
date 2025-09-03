@@ -11,7 +11,7 @@ import Result "mo:core/Result";
 import Hex "mo:hex";
 
 // Import functionality from WASM components.
-import meet_and_greet "../../mops/component/meet_and_greet";
+import meet_and_greet "component:meet_and_greet";
 import ic_sig_verifier "component:ic_sig_verifier";
 import { verifyBlsSig = verifyBlsSignature } "component:ic_sig_verifier";
 
