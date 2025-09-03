@@ -19,38 +19,10 @@ struct CanisterSigVerifierArgs {
     public_key_der: Vec<u8>,
 }
 impl Guest for IcSigVerifier {
-    fn verify_canister_sig_mainnet(args_serialized: Vec<u8>) -> Vec<u8> {
-        let args = match Decode!(&args_serialized, CanisterSigVerifierArgs) {
-            Ok(args) => args,
-            Err(_) => {
-                return "failed parsing arguments of verify_canister_sig"
-                    .as_bytes()
-                    .to_vec()
-            }
-        };
-        match verify_canister_sig(
-            &args.message,
-            &args.signature_cbor,
-            &args.public_key_der,
-            &ic_canister_sig_creation::IC_ROOT_PUBLIC_KEY,
-        ) {
-            Ok(_) => "verification succeeded".as_bytes().to_vec(),
-            Err(err_msg) => format!("verification failed: {}", err_msg)
-                .as_bytes()
-                .to_vec(),
-        }
-    }
-
     // The signature must be exactly 48 bytes (compressed G1 element)
     // The key must be exactly 96 bytes (compressed G2 element)
-    fn verify_bls_sig(signature: Vec<u8>, message: Vec<u8>, public_key: Vec<u8>) -> bool {
-        match verify_bls_signature(&signature, &message, &public_key) {
-            Ok(_) => true,
-            Err(_) => {
-                println!("BLS signature verification failed");
-                false
-            }
-        }
+    fn verify_bls_sig(signature: Vec<u8>, message: Vec<u8>, public_key: Vec<u8>) -> Result<bool, String> {
+        verify_bls_signature(&signature, &message, &public_key).map(|_| true).map_err(|_| "BLS signature verification failed".to_string())
     }
 
     fn verify_canister_sig(
@@ -58,18 +30,27 @@ impl Guest for IcSigVerifier {
         message: Vec<u8>,
         public_key_der: Vec<u8>,
         ic_root_public_key_raw: Vec<u8>,
-    ) -> bool {
-        match verify_canister_sig(
+    ) -> Result<bool, String> {
+        verify_canister_sig(
             &message,
             &signature_cbor,
             &public_key_der,
             &ic_root_public_key_raw,
-        ) {
-            Ok(_) => true,
-            Err(err_msg) => {
-                println!("canister signature verification failed: {}", err_msg);
-                false
+        ).map(|_| true)
+    }
+
+    fn verify_canister_sig_mainnet(args_serialized: Vec<u8>) -> Result<bool, String> {
+        let args = match Decode!(&args_serialized, CanisterSigVerifierArgs) {
+            Ok(args) => args,
+            Err(_) => {
+                return Err("failed parsing arguments of verify_canister_sig".to_string());
             }
-        }
+        };
+        verify_canister_sig(
+            &args.message,
+            &args.signature_cbor,
+            &args.public_key_der,
+            &ic_canister_sig_creation::IC_ROOT_PUBLIC_KEY,
+        ).map(|_| true)
     }
 }
