@@ -21,8 +21,8 @@ struct CanisterSigVerifierArgs {
 impl Guest for IcSigVerifier {
     // The signature must be exactly 48 bytes (compressed G1 element)
     // The key must be exactly 96 bytes (compressed G2 element)
-    fn verify_bls_sig(signature: Vec<u8>, message: Vec<u8>, public_key: Vec<u8>) -> Result<bool, String> {
-        verify_bls_signature(&signature, &message, &public_key).map(|_| true).map_err(|_| "BLS signature verification failed".to_string())
+    fn verify_bls_sig(signature: Vec<u8>, message: Vec<u8>, public_key: Vec<u8>) -> Result<(), String> {
+        verify_bls_signature(&signature, &message, &public_key).map_err(|_| "BLS signature verification failed".to_string())
     }
 
     fn verify_canister_sig(
@@ -30,16 +30,16 @@ impl Guest for IcSigVerifier {
         message: Vec<u8>,
         public_key_der: Vec<u8>,
         ic_root_public_key_raw: Vec<u8>,
-    ) -> Result<bool, String> {
+    ) -> Result<(), String> {
         verify_canister_sig(
             &message,
             &signature_cbor,
             &public_key_der,
             &ic_root_public_key_raw,
-        ).map(|_| true)
+        )
     }
 
-    fn verify_canister_sig_mainnet(args_serialized: Vec<u8>) -> Result<bool, String> {
+    fn verify_canister_sig_mainnet(args_serialized: Vec<u8>) -> Result<(), String> {
         let args = match Decode!(&args_serialized, CanisterSigVerifierArgs) {
             Ok(args) => args,
             Err(_) => {
@@ -51,6 +51,6 @@ impl Guest for IcSigVerifier {
             &args.signature_cbor,
             &args.public_key_der,
             &ic_canister_sig_creation::IC_ROOT_PUBLIC_KEY,
-        ).map(|_| true)
+        )
     }
 }
