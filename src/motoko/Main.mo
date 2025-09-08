@@ -260,7 +260,7 @@ do {
     test("To Vec Char", debug_show meet_and_greet.to_vec_char(128, 'a'), "['@', 'a']");
     test("To Vec U8", debug_show meet_and_greet.to_vec_u8(2, 'a'), "[1, 97]");
     test("To Vec I16", debug_show meet_and_greet.to_vec_i16(4, 1), "[+2, 0]");
-    test("To Vec U32", debug_show meet_and_greet.to_vec_u32(4, 1), "[1, 0]");
+    test("To Vec U32", debug_show meet_and_greet.to_vec_u32(8, 4), "[4, 2]");
     test("To Vec I64", debug_show meet_and_greet.to_vec_i64(4, 1), "[+2, 0]");
     test("To Vec F64", debug_show meet_and_greet.to_vec_f64(4, 1.4), "[2.000000, 0.700000]");
     test("To Vec String", debug_show meet_and_greet.to_vec_string("Hello", "World"), "[\"Hello!\", \"World!\"]");
@@ -302,8 +302,8 @@ do {
 
     test("Tuple String U64", debug_show meet_and_greet.tuple_string_u64("hello", 1), "(\"hello!\", 2)");
     test("Tuple Variant Array Result", debug_show meet_and_greet.tuple_variant_array_result((#abc, ["hello", "world"], #ok(1))), "(#def, [\"hello!\", \"world!\"], #ok(2))");
-    // test("Tuples Nested1", debug_show meet_and_greet.tuples_nested1((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
-    // test("Tuples Nested", debug_show meet_and_greet.tuples_nested((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
+    test("Tuples Nested1", debug_show meet_and_greet.tuples_nested1((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 7))");
+    test("Tuples Nested", debug_show meet_and_greet.tuples_nested((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 7))");
 
     test("Unit", debug_show meet_and_greet.unit(), "()");
     test("Unit Result", debug_show meet_and_greet.unit_result(#ok), "#ok");

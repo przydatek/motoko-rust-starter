@@ -376,10 +376,14 @@ impl Guest for MeetAndGreet {
         )
     }
     fn tuples_nested1(v1: (bool, (u8, u16)), v2: ((u8, u16), u32)) -> ((bool, u32), (u8, u32)) {
-        ((!v1.0, v1.1 .1 as u32 + 1), (v2.0 .0 + 1, v2.1 + 1))
+        let (b, (x1, x2)) = v1;
+        let ((y, z1), z2) = v2;
+        ((!b, x1 as u32 + x2 as u32), (y + 1, z1 as u32 + z2))
     }
     fn tuples_nested(v1: (bool, (u8, u16)), v2: ((u8, u16), u64)) -> ((bool, u32), (u8, u64)) {
-        ((!v1.0, v1.1 .1 as u32 + 1), (v2.0 .0 + 1, v2.1 + 1))
+        let (b, (x1, x2)) = v1;
+        let ((y, z1), z2) = v2;
+        ((!b, x1 as u32 + x2 as u32), (y + 1, z1 as u64 + z2))
     }
 
     fn unit() {}
