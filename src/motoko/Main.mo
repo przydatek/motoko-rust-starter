@@ -216,13 +216,13 @@ do {
 
 do {
     debugPrint("\n===== Error reported by a component: ");
-    test("verifyCanisterSigMainnet: ", debug_show (ic_sig_verifier.verifyCanisterSigMainnet("args, serialized")), debug_show(#err("failed parsing arguments of verify_canister_sig")));
+    test("verifyCanisterSigMainnet: ", debug_show (ic_sig_verifier.verifyCanisterSigMainnet("args, serialized")), debug_show (#err("failed parsing arguments of verify_canister_sig")));
     let dummyArgs : CanisterSigVerifierArgs = {
         message = Blob.fromArray([1, 2, 3]); // Placeholder for message
         signature_cbor = Blob.fromArray([3, 4, 5]); // Placeholder for signature
         public_key_der = Blob.fromArray([6, 7, 8]); // Placeholder for public key
     };
-    test("verifyCanisterSigMainnet: ", debug_show (ic_sig_verifier.verifyCanisterSigMainnet(to_candid (dummyArgs))), debug_show(#err("signature CBOR doesn't have a self-describing tag")));
+    test("verifyCanisterSigMainnet: ", debug_show (ic_sig_verifier.verifyCanisterSigMainnet(to_candid (dummyArgs))), debug_show (#err("signature CBOR doesn't have a self-describing tag")));
 };
 
 do {
@@ -260,7 +260,7 @@ do {
     test("To Vec Char", debug_show meet_and_greet.to_vec_char(128, 'a'), "['@', 'a']");
     test("To Vec U8", debug_show meet_and_greet.to_vec_u8(2, 'a'), "[1, 97]");
     test("To Vec I16", debug_show meet_and_greet.to_vec_i16(4, 1), "[+2, 0]");
-    test("To Vec U32", debug_show meet_and_greet.to_vec_u32(4, 1), "[1, 0]");
+    test("To Vec U32", debug_show meet_and_greet.to_vec_u32(8, 4), "[4, 2]");
     test("To Vec I64", debug_show meet_and_greet.to_vec_i64(4, 1), "[+2, 0]");
     test("To Vec F64", debug_show meet_and_greet.to_vec_f64(4, 1.4), "[2.000000, 0.700000]");
     test("To Vec String", debug_show meet_and_greet.to_vec_string("Hello", "World"), "[\"Hello!\", \"World!\"]");
@@ -301,9 +301,17 @@ do {
     // test("Options Array", debug_show meet_and_greet.options_array(?([?("hello"), null, ?("world")])), "?([?(\"hello!\"), null, ?(\"world!\")])");
 
     test("Tuple String U64", debug_show meet_and_greet.tuple_string_u64("hello", 1), "(\"hello!\", 2)");
-    // test("Tuple Variant Array Result", debug_show meet_and_greet.tuple_variant_array_result((#abc, ["hello", "world"], #ok(1))), "(#def, [\"hello!\", \"world!\"], #ok(2))");
-    // test("Tuples Nested1", debug_show meet_and_greet.tuples_nested1((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
-    // test("Tuples Nested", debug_show meet_and_greet.tuples_nested((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 5))");
+    test("Tuple Variant Array Result", debug_show meet_and_greet.tuple_variant_array_result((#abc, ["hello", "world"], #ok(1))), "(#def, [\"hello!\", \"world!\"], #ok(2))");
+    test("Tuples Nested1", debug_show meet_and_greet.tuples_nested1((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 7))");
+    test("Tuples Nested", debug_show meet_and_greet.tuples_nested((true, (1, 2)), ((2, 3), 4)), "((false, 3), (3, 7))");
+
+    test("Unit", debug_show meet_and_greet.unit(), "()");
+    test("Unit Result", debug_show meet_and_greet.unit_result(#ok), "#ok");
+    test("Unit Result", debug_show meet_and_greet.unit_result(#err), "#ok");
+    test("Unit Result Er", debug_show meet_and_greet.unit_result_er(#err("abc")), "#err(\"abc!\")");
+    test("Unit Result Er", debug_show meet_and_greet.unit_result_er(#ok), "#ok");
+    test("Unit Result Ok", debug_show meet_and_greet.unit_result_ok(#ok("abc")), "#ok(\"abc!\")");
+    test("Unit Result Ok", debug_show meet_and_greet.unit_result_ok(#err), "#err");
 };
 
 if (failed > 0) {
