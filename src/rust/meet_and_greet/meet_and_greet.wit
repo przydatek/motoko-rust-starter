@@ -79,5 +79,10 @@ world meet-and-greet {
     tuple-variant-array-result: func(v: tuple<v1, list<string>, result<u16, string>>) -> tuple<v1, list<string>, result<u16, string>>;
     tuples-nested1: func(v1: tuple<bool, tuple<u8, u16>>, v2: tuple<tuple<u8, u16>, u32>) -> tuple<tuple<bool, u32>, tuple<u8, u32>>;
     tuples-nested: func(v1: tuple<bool, tuple<u8, u16>>, v2: tuple<tuple<u8, u16>, u64>) -> tuple<tuple<bool, u32>, tuple<u8, u64>>;
+
+    unit: func();
+    unit-result: func(v: result) -> result;
+    unit-result-er: func(v: result<_, string>) -> result<_, string>;
+    unit-result-ok: func(v: result<string>) -> result<string>;
   }
 }

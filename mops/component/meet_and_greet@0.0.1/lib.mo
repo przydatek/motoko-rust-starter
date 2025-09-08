@@ -1,6 +1,6 @@
 module meet_and_greet {
-    public func sayHello(guest_name : Text) : Text = ((prim "component:meet-and-greet:say-hello") : Text -> Text) (guest_name);
-    public func sayBye(guest_name : Text, formal : Bool) : Text = ((prim "component:meet-and-greet:say-bye") : (Text, Bool) -> Text) (guest_name, formal);
+    public func sayHello(guest_name : Text) : Text = ((prim "component:meet-and-greet:say-hello") : Text -> Text)(guest_name);
+    public func sayBye(guest_name : Text, formal : Bool) : Text = ((prim "component:meet-and-greet:say-bye") : (Text, Bool) -> Text)(guest_name, formal);
     public func concat0() : Blob = ((prim "component:meet-and-greet:concat0") : () -> Blob)();
     public func concat2(a : Blob, b : Blob) : Blob = ((prim "component:meet-and-greet:concat2") : (Blob, Blob) -> Blob)(a, b);
     public func prim_bool(a : Bool) : Bool = ((prim "component:meet-and-greet:prim-bool") : Bool -> Bool)(a);
@@ -83,4 +83,9 @@ module meet_and_greet {
     public func tuple_variant_array_result(v : (V1, [Text], Result<Nat16, Text>)) : (V1, [Text], Result<Nat16, Text>) = ((prim "component:meet-and-greet:tuple-variant-array-result") : (V1, [Text], Result<Nat16, Text>) -> (V1, [Text], Result<Nat16, Text>))(v);
     public func tuples_nested1(v1 : (Bool, (Nat8, Nat16)), v2 : ((Nat8, Nat16), Nat32)) : ((Bool, Nat32), (Nat8, Nat32)) = ((prim "component:meet-and-greet:tuples-nested1") : ((Bool, (Nat8, Nat16)), ((Nat8, Nat16), Nat32)) -> ((Bool, Nat32), (Nat8, Nat32)))(v1, v2);
     public func tuples_nested(v1 : (Bool, (Nat8, Nat16)), v2 : ((Nat8, Nat16), Nat64)) : ((Bool, Nat32), (Nat8, Nat64)) = ((prim "component:meet-and-greet:tuples-nested") : ((Bool, (Nat8, Nat16)), ((Nat8, Nat16), Nat64)) -> ((Bool, Nat32), (Nat8, Nat64)))(v1, v2);
+
+    public func unit() : () = ((prim "component:meet-and-greet:unit") : () -> ())();
+    public func unit_result(v : Result<(), ()>) : Result<(), ()> = ((prim "component:meet-and-greet:unit-result") : Result<(), ()> -> Result<(), ()>)(v);
+    public func unit_result_er(v : Result<(), Text>) : Result<(), Text> = ((prim "component:meet-and-greet:unit-result-er") : Result<(), Text> -> Result<(), Text>)(v);
+    public func unit_result_ok(v : Result<Text, ()>) : Result<Text, ()> = ((prim "component:meet-and-greet:unit-result-ok") : Result<Text, ()> -> Result<Text, ()>)(v);
 };
