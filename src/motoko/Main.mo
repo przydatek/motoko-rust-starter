@@ -260,8 +260,18 @@ func testCompression(data : Blob) {
 
 do {
     debugPrint("\n===== Data compression using zstd");
-    testCompression("Hello, world! This is a test of zstd compression. Hello, world! This is a test of zstd compression.");
+    func repeat(s : Text, n : Nat) : Blob {
+        var acc = "";
+        var i : Nat = 0;
+        while (i < n) {
+            acc := acc # s;
+            i += 1;
+        };
+        Text.encodeUtf8(acc);
+    };
+    testCompression(repeat("Hello, world! This is a test of zstd compression.", 2));
     testCompression("aaaaaaabbbbbbbccccccdddddddeeeeeeefffffffggggghhhhhhhiiiiiiiijjjjjjjkkkkkkkllllllllmmmmmmnnnnnno");
+    testCompression(repeat("The quick brown fox jumps over the lazy dog. ", 100));
 };
 
 do {
