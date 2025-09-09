@@ -14,6 +14,7 @@ import Hex "mo:hex";
 import meet_and_greet "component:meet_and_greet";
 import ic_sig_verifier "component:ic_sig_verifier";
 import { verifyBlsSig = verifyBlsSignature } "component:ic_sig_verifier";
+import zstd "component:zstd";
 
 var failed = 0;
 
@@ -56,6 +57,7 @@ func testBlsSignature(sig_hex : Text, msg_hex : Text, pk_hex : Text, expected : 
     if (actual == expected) {
         debugPrint("✅ " # logMsg # " is " # (if (expected == (#ok)) { "valid" } else { "invalid" }) # ", as expected");
     } else {
+        failed += 1;
         debugPrint("❌ verification of " # logMsg # " returned unexpected result:");
         debugPrint("   Expected: " # debug_show (expected));
         debugPrint("   Actual  : " # debug_show (actual));
@@ -73,6 +75,7 @@ func testCanisterSignature(sig_hex : Text, msg_hex : Text, pk_hex : Text, root_p
     if (actual == expected) {
         debugPrint("✅ " # logMsg # " is " # (if (expected == (#ok)) { "valid" } else { "invalid" }) # ", as expected");
     } else {
+        failed += 1;
         debugPrint("❌ verification of " # logMsg # " returned unexpected result:");
         debugPrint("   Expected: " # debug_show (expected));
         debugPrint("   Actual  : " # debug_show (actual));
@@ -223,6 +226,42 @@ do {
         public_key_der = Blob.fromArray([6, 7, 8]); // Placeholder for public key
     };
     test("verifyCanisterSigMainnet: ", debug_show (ic_sig_verifier.verifyCanisterSigMainnet(to_candid (dummyArgs))), debug_show (#err("signature CBOR doesn't have a self-describing tag")));
+};
+
+func testCompression(data : Blob) {
+    switch (zstd.encodeAll(data, 5)) {
+        case (#ok(compressed)) {
+            if (Blob.size(data) <= Blob.size(compressed)) {
+                failed += 1;
+                debugPrint("❌ Compression did not shrink the data: len(original)=" # debug_show (Blob.size(data)) # ", len(compressed)=" # debug_show (Blob.size(compressed)) # ".");
+            } else {
+                switch (zstd.decodeAll(compressed)) {
+                    case (#ok(decompressed)) {
+                        if (decompressed == data) {
+                            debugPrint("✅ Compression round-trip successful for data of length " # debug_show (Blob.size(data)) # ", compressed to length " # debug_show (Blob.size(compressed)) # ".");
+                        } else {
+                            failed += 1;
+                            debugPrint("❌ Decompressed data does not match original!");
+                        };
+                    };
+                    case (#err(errMsg)) {
+                        failed += 1;
+                        debugPrint("❌ Decompression failed: " # errMsg);
+                    };
+                };
+            };
+        };
+        case (#err(errMsg)) {
+            failed += 1;
+            debugPrint("❌ Compression failed: " # errMsg);
+        };
+    };
+};
+
+do {
+    debugPrint("\n===== Data compression using zstd");
+    testCompression("Hello, world! This is a test of zstd compression. Hello, world! This is a test of zstd compression.");
+    testCompression("aaaaaaabbbbbbbccccccdddddddeeeeeeefffffffggggghhhhhhhiiiiiiiijjjjjjjkkkkkkkllllllllmmmmmmnnnnnno");
 };
 
 do {
