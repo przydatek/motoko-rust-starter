@@ -30,7 +30,7 @@ else
 fi &&
 echo --- Building Motoko component... &&
 echo ... running moc... &&
-$MOC_BIN $MO_SRC_DIR/Main.mo -wasi-system-api -wasm-components $MOC_PACKAGES $MOC_COMPONENT_PACKAGES -o target/motoko.wasm &&
+$MOC_BIN $MO_SRC_DIR/Main.mo -wasi-system-api -wasm-components --legacy-persistence $MOC_PACKAGES $MOC_COMPONENT_PACKAGES -o target/motoko.wasm &&
 echo ... running embed... &&
 wasm-tools component embed target/motoko.wit target/motoko.wasm -o target/motoko-embed.wasm &&
 echo ... creating component... &&
