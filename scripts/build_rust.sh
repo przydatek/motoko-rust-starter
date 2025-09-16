@@ -41,5 +41,6 @@ build_rust_component() {
   echo ___ Building Rust components...
   build_rust_component ic_sig_verifier
   build_rust_component meet_and_greet
+  build_rust_component zstd
   echo ___ DONE building Rust components.
 )
